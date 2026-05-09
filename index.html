@@ -29,15 +29,7 @@
   .btn-outline{background:transparent;color:var(--ink);padding:14px 28px;border-radius:100px;font-weight:800;font-size:16px;text-decoration:none;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transition:all 0.15s;display:inline-block;}
   .btn-outline:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
   .hero-right{display:flex;align-items:flex-end;justify-content:center;height:100%;}
-  .machines-wrap{display:flex;align-items:flex-end;gap:20px;}
-  .machine-wrap{position:relative;}
-  .machine-wrap.m1{animation:floatM 4s ease-in-out infinite;}
-  .machine-wrap.m2{animation:floatM 4s ease-in-out infinite 0.8s;}
   @keyframes floatM{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
-  .float-doodle{position:absolute;font-family:'Caveat',cursive;font-size:13px;font-weight:700;color:var(--ink);background:white;border:2px solid var(--ink);border-radius:10px;padding:5px 10px;box-shadow:2px 2px 0 var(--ink);white-space:nowrap;}
-  .fd1{top:30px;right:-55px;transform:rotate(4deg);}
-  .fd2{top:130px;left:-55px;transform:rotate(-3deg);}
-  .fd3{bottom:130px;right:-45px;transform:rotate(2deg);}
   .ticker{overflow:hidden;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);background:var(--blue);color:white;padding:12px 0;}
   .ticker-inner{display:flex;animation:ticker 22s linear infinite;width:max-content;}
   @keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
@@ -100,12 +92,21 @@
   .btn-blue-outline:hover{border-color:white;}
   .scan-box{margin:48px auto 0;max-width:300px;border:2px solid rgba(255,255,255,0.2);border-radius:24px;padding:28px 24px;background:rgba(255,255,255,0.05);text-align:center;}
   .scan-text{font-family:'Caveat',cursive;font-size:20px;color:#888;margin-top:12px;}
-  footer{border-top:2px solid var(--ink);padding:40px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;background:var(--cream);}
-  .footer-logo{font-weight:900;font-size:20px;}.footer-logo span{color:var(--blue);}
-  .footer-links{display:flex;gap:24px;}
+  footer{border-top:2px solid var(--ink);background:var(--cream);}
+  .footer-top{max-width:1100px;margin:0 auto;padding:52px 60px 32px;display:grid;grid-template-columns:1.4fr 1fr 1.2fr 1.4fr;gap:40px;}
+  .footer-logo{font-weight:900;font-size:22px;margin-bottom:10px;}.footer-logo span{color:var(--blue);}
+  .footer-tagline{font-size:13px;color:var(--ink-soft);line-height:1.6;margin-bottom:12px;font-weight:600;}
+  .footer-doodle{font-family:'Caveat',cursive;font-size:14px;color:var(--ink-soft);font-weight:600;}
+  .footer-col-title{font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;}
+  .footer-links{display:flex;flex-direction:column;gap:8px;}
   .footer-links a{font-size:14px;color:var(--ink-soft);text-decoration:none;font-weight:700;}
   .footer-links a:hover{color:var(--blue);}
-  .footer-doodle{font-family:'Caveat',cursive;font-size:15px;color:var(--ink-soft);font-weight:600;}
+  .footer-contact{display:flex;flex-direction:column;gap:10px;}
+  .footer-contact-item{font-size:13px;color:var(--ink-soft);font-weight:700;text-decoration:none;display:flex;align-items:flex-start;gap:8px;line-height:1.5;}
+  .footer-contact-item:hover{color:var(--blue);}
+  .footer-maps-link{display:inline-block;margin-top:8px;font-size:12px;font-weight:800;color:var(--blue);text-decoration:none;}
+  .footer-maps-link:hover{text-decoration:underline;}
+  .footer-bottom{border-top:1px solid rgba(0,0,0,0.08);max-width:1100px;margin:0 auto;padding:16px 60px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ink-soft);font-weight:700;}
   @media(max-width:900px){
     nav{padding:16px 20px;}.nav-links{display:none;}
     .hero{grid-template-columns:1fr;padding:40px 24px 0;min-height:auto;gap:40px;}
@@ -114,8 +115,10 @@
     .machines-grid{grid-template-columns:1fr;}
     .placement-grid{grid-template-columns:repeat(3,1fr);}
     .steps-row{grid-template-columns:1fr;}.step-arrow{transform:rotate(90deg);}
-    footer{padding:32px 24px;flex-direction:column;align-items:flex-start;}
+    .footer-top{grid-template-columns:1fr 1fr;padding:40px 24px 24px;gap:28px;}
+    .footer-bottom{padding:16px 24px;flex-direction:column;gap:6px;text-align:center;}
   }
+  @media(max-width:560px){.footer-top{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -141,67 +144,111 @@
     </div>
   </div>
   <div class="hero-right">
-    <div class="machines-wrap">
-      <div class="machine-wrap m1">
-        <div class="float-doodle fd1">☕ freshly brewed</div>
-        <div class="float-doodle fd2">🔋 energy loading…</div>
-        <svg width="190" viewBox="0 0 190 340" xmlns="http://www.w3.org/2000/svg">
-          <rect x="15" y="20" width="160" height="290" rx="18" fill="white" stroke="#1A1A1A" stroke-width="2.5"/>
-          <rect x="15" y="20" width="160" height="52" rx="18" fill="#2563EB" stroke="#1A1A1A" stroke-width="2.5"/>
-          <rect x="15" y="58" width="160" height="14" fill="#2563EB"/>
-          <text x="95" y="52" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="14" fill="white">BREW ☕</text>
-          <rect x="32" y="86" width="126" height="76" rx="10" fill="#EFF6FF" stroke="#1A1A1A" stroke-width="1.5"/>
-          <circle cx="95" cy="118" r="26" fill="#FDE68A" stroke="#1A1A1A" stroke-width="1.5"/>
-          <path d="M85 116 Q87 112 89 116" stroke="#1A1A1A" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <path d="M101 116 Q103 112 105 116" stroke="#1A1A1A" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <path d="M87 127 Q95 134 103 127" stroke="#1A1A1A" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <circle cx="85" cy="125" r="4" fill="#FFB3C1" opacity="0.7"/>
-          <circle cx="105" cy="125" r="4" fill="#FFB3C1" opacity="0.7"/>
-          <text x="95" y="153" text-anchor="middle" font-family="Caveat,cursive" font-size="11" font-weight="700" fill="#2563EB">bikin hari mu enak!</text>
-          <rect x="32" y="174" width="56" height="42" rx="7" fill="#EFF6FF" stroke="#1A1A1A" stroke-width="1.5"/>
-          <text x="60" y="200" text-anchor="middle" font-size="20">☕</text>
-          <rect x="102" y="174" width="56" height="42" rx="7" fill="#FEF9EE" stroke="#1A1A1A" stroke-width="1.5"/>
-          <text x="130" y="200" text-anchor="middle" font-size="20">🧋</text>
-          <rect x="32" y="228" width="126" height="20" rx="8" fill="#1A1A1A"/>
-          <text x="95" y="242" text-anchor="middle" font-family="Nunito,sans-serif" font-size="9" font-weight="800" fill="white">QRIS · CASHLESS · 24JAM</text>
-          <rect x="52" y="256" width="16" height="16" rx="4" fill="#D1D5DB" stroke="#1A1A1A" stroke-width="1.5"/>
-          <rect x="122" y="256" width="16" height="16" rx="4" fill="#D1D5DB" stroke="#1A1A1A" stroke-width="1.5"/>
-          <ellipse cx="95" cy="278" rx="70" ry="8" fill="#1A1A1A" opacity="0.07"/>
-        </svg>
-      </div>
-      <div class="machine-wrap m2">
-        <div class="float-doodle fd3">🍿 snack time!</div>
-        <svg width="170" viewBox="0 0 170 320" xmlns="http://www.w3.org/2000/svg">
-          <rect x="15" y="20" width="140" height="272" rx="16" fill="white" stroke="#1A1A1A" stroke-width="2.5"/>
-          <rect x="15" y="20" width="140" height="48" rx="16" fill="#FB923C" stroke="#1A1A1A" stroke-width="2.5"/>
-          <rect x="15" y="54" width="140" height="14" fill="#FB923C"/>
-          <text x="85" y="49" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="13" fill="white">MUNCH 🍿</text>
-          <rect x="30" y="80" width="110" height="64" rx="8" fill="#FFF7ED" stroke="#1A1A1A" stroke-width="1.5"/>
-          <circle cx="85" cy="107" r="22" fill="#FDE68A" stroke="#1A1A1A" stroke-width="1.5"/>
-          <path d="M77 105 Q79 101 81 105" stroke="#1A1A1A" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <path d="M89 105 Q91 101 93 105" stroke="#1A1A1A" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <path d="M78 116 Q85 122 92 116" stroke="#1A1A1A" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <text x="85" y="137" text-anchor="middle" font-family="Caveat,cursive" font-size="10" font-weight="700" fill="#C2410C">makan dulu, bos!</text>
-          <rect x="30" y="155" width="32" height="28" rx="5" fill="#FFF7ED" stroke="#1A1A1A" stroke-width="1.5"/>
-          <text x="46" y="174" text-anchor="middle" font-size="13">🍫</text>
-          <rect x="69" y="155" width="32" height="28" rx="5" fill="#FFF7ED" stroke="#1A1A1A" stroke-width="1.5"/>
-          <text x="85" y="174" text-anchor="middle" font-size="13">🍿</text>
-          <rect x="108" y="155" width="32" height="28" rx="5" fill="#FFF7ED" stroke="#1A1A1A" stroke-width="1.5"/>
-          <text x="124" y="174" text-anchor="middle" font-size="13">🥤</text>
-          <rect x="30" y="191" width="32" height="28" rx="5" fill="#F0FDF4" stroke="#1A1A1A" stroke-width="1.5"/>
-          <text x="46" y="210" text-anchor="middle" font-size="13">🧃</text>
-          <rect x="69" y="191" width="32" height="28" rx="5" fill="#FFF1F2" stroke="#1A1A1A" stroke-width="1.5"/>
-          <text x="85" y="210" text-anchor="middle" font-size="13">🍬</text>
-          <rect x="108" y="191" width="32" height="28" rx="5" fill="#F5F3FF" stroke="#1A1A1A" stroke-width="1.5"/>
-          <text x="124" y="210" text-anchor="middle" font-size="13">⚡</text>
-          <rect x="30" y="230" width="110" height="18" rx="8" fill="#1A1A1A"/>
-          <text x="85" y="243" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" font-weight="800" fill="white">QRIS · CASHLESS · 24JAM</text>
-          <rect x="46" y="256" width="14" height="14" rx="3" fill="#D1D5DB" stroke="#1A1A1A" stroke-width="1.5"/>
-          <rect x="110" y="256" width="14" height="14" rx="3" fill="#D1D5DB" stroke="#1A1A1A" stroke-width="1.5"/>
-          <ellipse cx="85" cy="277" rx="58" ry="7" fill="#1A1A1A" opacity="0.07"/>
-        </svg>
-      </div>
-    </div>
+    <svg width="100%" viewBox="0 0 480 520" xmlns="http://www.w3.org/2000/svg" style="max-width:520px;animation:floatM 4s ease-in-out infinite;">
+      <ellipse cx="155" cy="488" rx="95" ry="9" fill="#1A1A1A" opacity="0.07"/>
+      <ellipse cx="345" cy="488" rx="90" ry="9" fill="#1A1A1A" opacity="0.07"/>
+      <rect x="100" y="458" width="18" height="26" rx="5" fill="#D1D5DB" stroke="#1A1A1A" stroke-width="2"/>
+      <rect x="192" y="458" width="18" height="26" rx="5" fill="#D1D5DB" stroke="#1A1A1A" stroke-width="2"/>
+      <rect x="74" y="48" width="166" height="416" rx="20" fill="white" stroke="#1A1A1A" stroke-width="3"/>
+      <rect x="74" y="48" width="166" height="66" rx="20" fill="#2563EB" stroke="#1A1A1A" stroke-width="3"/>
+      <rect x="74" y="92" width="166" height="22" fill="#2563EB"/>
+      <text x="157" y="80" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="16" fill="white">LoyaBox</text>
+      <text x="157" y="104" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="700" font-size="10" fill="#93C5FD" letter-spacing="2">BREW ☕</text>
+      <rect x="90" y="128" width="134" height="100" rx="10" fill="#EFF6FF" stroke="#1A1A1A" stroke-width="2"/>
+      <circle cx="157" cy="174" r="32" fill="#FDE68A" stroke="#1A1A1A" stroke-width="2.5"/>
+      <rect x="137" y="138" width="40" height="12" rx="3" fill="#1A1A1A"/>
+      <ellipse cx="157" cy="143" rx="24" ry="9" fill="#1A1A1A"/>
+      <ellipse cx="157" cy="137" rx="9" ry="6" fill="white" stroke="#1A1A1A" stroke-width="1.5"/>
+      <ellipse cx="138" cy="180" rx="6" ry="4" fill="#FFB3C1" opacity="0.8"/>
+      <ellipse cx="176" cy="180" rx="6" ry="4" fill="#FFB3C1" opacity="0.8"/>
+      <path d="M146 170 Q150 165 154 170" stroke="#1A1A1A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M160 170 Q164 165 168 170" stroke="#1A1A1A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M147 182 Q157 192 167 182" stroke="#1A1A1A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M125 174 Q110 170 104 180" stroke="#FDE68A" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <path d="M189 174 Q204 170 210 180" stroke="#FDE68A" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <text x="95" y="188" text-anchor="middle" font-size="15">☕</text>
+      <text x="218" y="188" text-anchor="middle" font-size="15">☕</text>
+      <text x="157" y="223" text-anchor="middle" font-family="Caveat,cursive" font-weight="700" font-size="12" fill="#2563EB">siap bikin hari mu enak!</text>
+      <rect x="90" y="244" width="60" height="48" rx="7" fill="#EFF6FF" stroke="#1A1A1A" stroke-width="1.5"/>
+      <text x="120" y="260" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="8" fill="#1E40AF">ESPRESSO</text>
+      <text x="120" y="280" text-anchor="middle" font-size="17">☕</text>
+      <rect x="158" y="244" width="66" height="48" rx="7" fill="#F0FDF4" stroke="#1A1A1A" stroke-width="1.5"/>
+      <text x="191" y="260" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="8" fill="#166534">MATCHA</text>
+      <text x="191" y="280" text-anchor="middle" font-size="17">🧋</text>
+      <rect x="90" y="300" width="60" height="48" rx="7" fill="#FEF9EE" stroke="#1A1A1A" stroke-width="1.5"/>
+      <text x="120" y="316" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="8" fill="#92400E">CHOCO</text>
+      <text x="120" y="336" text-anchor="middle" font-size="17">🍫</text>
+      <rect x="158" y="300" width="66" height="48" rx="7" fill="#FFF1F2" stroke="#1A1A1A" stroke-width="1.5"/>
+      <text x="191" y="316" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="8" fill="#9F1239">TEH TARIK</text>
+      <text x="191" y="336" text-anchor="middle" font-size="17">🍵</text>
+      <rect x="90" y="360" width="134" height="30" rx="8" fill="#F3F4F6" stroke="#1A1A1A" stroke-width="2"/>
+      <text x="157" y="380" text-anchor="middle" font-family="Caveat,cursive" font-weight="700" font-size="11" fill="#6B7280">— ambil kopi di sini —</text>
+      <rect x="93" y="402" width="128" height="22" rx="11" fill="#1A1A1A"/>
+      <text x="157" y="417" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" font-weight="800" fill="white" letter-spacing="1">QRIS · CASHLESS · 24JAM</text>
+      <rect x="93" y="432" width="128" height="20" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+      <text x="157" y="446" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="10" fill="#1E40AF">Coffee Machine</text>
+      <rect x="4" y="68" width="62" height="26" rx="7" fill="#FEF08A" stroke="#1A1A1A" stroke-width="1.5" transform="rotate(-8,35,81)"/>
+      <text x="35" y="85" text-anchor="middle" font-family="Caveat,cursive" font-weight="700" font-size="11" fill="#1A1A1A" transform="rotate(-8,35,85)">freshly brewed!</text>
+      <rect x="2" y="180" width="58" height="24" rx="7" fill="#FFD6E0" stroke="#1A1A1A" stroke-width="1.5" transform="rotate(6,31,192)"/>
+      <text x="31" y="196" text-anchor="middle" font-family="Caveat,cursive" font-weight="700" font-size="11" fill="#1A1A1A" transform="rotate(6,31,196)">hot &amp; cold!</text>
+      <rect x="288" y="458" width="18" height="26" rx="5" fill="#D1D5DB" stroke="#1A1A1A" stroke-width="2"/>
+      <rect x="374" y="458" width="18" height="26" rx="5" fill="#D1D5DB" stroke="#1A1A1A" stroke-width="2"/>
+      <rect x="264" y="60" width="156" height="404" rx="20" fill="white" stroke="#1A1A1A" stroke-width="3"/>
+      <rect x="264" y="60" width="156" height="62" rx="20" fill="#FB923C" stroke="#1A1A1A" stroke-width="3"/>
+      <rect x="264" y="100" width="156" height="22" fill="#FB923C"/>
+      <text x="342" y="90" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="16" fill="white">LoyaBox</text>
+      <text x="342" y="112" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="700" font-size="10" fill="#FED7AA" letter-spacing="2">MUNCH 🍿</text>
+      <rect x="280" y="136" width="124" height="96" rx="10" fill="#FFF7ED" stroke="#1A1A1A" stroke-width="2"/>
+      <circle cx="342" cy="180" r="30" fill="#FDE68A" stroke="#1A1A1A" stroke-width="2.5"/>
+      <ellipse cx="342" cy="158" rx="22" ry="10" fill="#FB923C" stroke="#1A1A1A" stroke-width="2"/>
+      <rect x="320" y="155" width="44" height="10" fill="#FB923C"/>
+      <rect x="317" y="158" width="50" height="7" rx="4" fill="#C2410C" stroke="#1A1A1A" stroke-width="1.5"/>
+      <ellipse cx="323" cy="185" rx="6" ry="4" fill="#FFB3C1" opacity="0.8"/>
+      <ellipse cx="361" cy="185" rx="6" ry="4" fill="#FFB3C1" opacity="0.8"/>
+      <path d="M331 175 Q335 170 339 175" stroke="#1A1A1A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <line x1="345" y1="172" x2="353" y2="175" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M332 188 Q342 198 352 188" stroke="#1A1A1A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="342" cy="196" rx="5" ry="3" fill="#F87171"/>
+      <path d="M312 180 Q298 176 292 185" stroke="#FDE68A" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <path d="M372 180 Q386 176 392 185" stroke="#FDE68A" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <text x="283" y="193" text-anchor="middle" font-size="14">🍿</text>
+      <text x="400" y="193" text-anchor="middle" font-size="14">🍫</text>
+      <text x="342" y="226" text-anchor="middle" font-family="Caveat,cursive" font-weight="700" font-size="11" fill="#C2410C">makan dulu baru kerja!</text>
+      <rect x="280" y="246" width="38" height="38" rx="6" fill="#FFF7ED" stroke="#1A1A1A" stroke-width="1.5"/>
+      <text x="299" y="259" text-anchor="middle" font-size="7" font-family="Nunito,sans-serif" font-weight="800" fill="#92400E">SNACK</text>
+      <text x="299" y="273" text-anchor="middle" font-size="15">🍫</text>
+      <rect x="323" y="246" width="38" height="38" rx="6" fill="#FFF7ED" stroke="#1A1A1A" stroke-width="1.5"/>
+      <text x="342" y="259" text-anchor="middle" font-size="7" font-family="Nunito,sans-serif" font-weight="800" fill="#92400E">DRINK</text>
+      <text x="342" y="273" text-anchor="middle" font-size="15">🥤</text>
+      <rect x="366" y="246" width="38" height="38" rx="6" fill="#FFF7ED" stroke="#1A1A1A" stroke-width="1.5"/>
+      <text x="385" y="259" text-anchor="middle" font-size="7" font-family="Nunito,sans-serif" font-weight="800" fill="#92400E">ENERGY</text>
+      <text x="385" y="273" text-anchor="middle" font-size="15">⚡</text>
+      <rect x="280" y="290" width="38" height="38" rx="6" fill="#F0FDF4" stroke="#1A1A1A" stroke-width="1.5"/>
+      <text x="299" y="303" text-anchor="middle" font-size="7" font-family="Nunito,sans-serif" font-weight="800" fill="#166534">JUICE</text>
+      <text x="299" y="317" text-anchor="middle" font-size="15">🧃</text>
+      <rect x="323" y="290" width="38" height="38" rx="6" fill="#FFF1F2" stroke="#1A1A1A" stroke-width="1.5"/>
+      <text x="342" y="303" text-anchor="middle" font-size="7" font-family="Nunito,sans-serif" font-weight="800" fill="#9F1239">CANDY</text>
+      <text x="342" y="317" text-anchor="middle" font-size="15">🍬</text>
+      <rect x="366" y="290" width="38" height="38" rx="6" fill="#EFF6FF" stroke="#1A1A1A" stroke-width="1.5"/>
+      <text x="385" y="303" text-anchor="middle" font-size="7" font-family="Nunito,sans-serif" font-weight="800" fill="#1E40AF">ESSNT.</text>
+      <text x="385" y="317" text-anchor="middle" font-size="15">🩹</text>
+      <rect x="280" y="342" width="124" height="28" rx="8" fill="#F3F4F6" stroke="#1A1A1A" stroke-width="2"/>
+      <text x="342" y="360" text-anchor="middle" font-family="Caveat,cursive" font-weight="700" font-size="10" fill="#6B7280">— ambil snack di sini —</text>
+      <rect x="283" y="382" width="118" height="22" rx="11" fill="#1A1A1A"/>
+      <text x="342" y="397" text-anchor="middle" font-family="Nunito,sans-serif" font-size="8" font-weight="800" fill="white" letter-spacing="1">QRIS · CASHLESS · 24JAM</text>
+      <rect x="283" y="412" width="118" height="20" rx="10" fill="#FFF7ED" stroke="#FB923C" stroke-width="1.5"/>
+      <text x="342" y="426" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="10" fill="#C2410C">Vending Machine</text>
+      <rect x="414" y="72" width="62" height="26" rx="7" fill="#FEF08A" stroke="#1A1A1A" stroke-width="1.5" transform="rotate(7,445,85)"/>
+      <text x="445" y="89" text-anchor="middle" font-family="Caveat,cursive" font-weight="700" font-size="11" fill="#1A1A1A" transform="rotate(7,445,89)">snack time!</text>
+      <rect x="416" y="188" width="62" height="24" rx="7" fill="#D1FAE5" stroke="#1A1A1A" stroke-width="1.5" transform="rotate(-5,447,200)"/>
+      <text x="447" y="204" text-anchor="middle" font-family="Caveat,cursive" font-weight="700" font-size="11" fill="#1A1A1A" transform="rotate(-5,447,204)">200+ produk!</text>
+      <circle cx="242" cy="270" r="24" fill="#1A1A1A" stroke="white" stroke-width="3"/>
+      <text x="242" y="264" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="9" fill="white">ATAU</text>
+      <text x="242" y="275" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="9" fill="white">DUA-</text>
+      <text x="242" y="286" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="9" fill="white">DUANYA</text>
+      <rect x="120" y="496" width="240" height="20" rx="10" fill="#1A1A1A"/>
+      <text x="240" y="510" text-anchor="middle" font-family="Nunito,sans-serif" font-size="9" font-weight="800" fill="white">📍 Tampan, Pekanbaru, Riau</text>
+    </svg>
   </div>
 </section>
 
@@ -371,15 +418,53 @@
 </section>
 
 <footer>
-  <div class="footer-logo">Loya<span>Box</span> ⚡</div>
-  <div class="footer-links">
-    <a href="#about">Tentang</a>
-    <a href="#machines">Mesin</a>
-    <a href="#placement">Lokasi</a>
-    <a href="https://wa.me/6287784217444" target="_blank">+62 877-8421-7444</a>
-    <a href="mailto:loyalin.id@gmail.com">loyalin.id@gmail.com</a>
+  <div class="footer-top">
+    <div class="footer-col">
+      <div class="footer-logo">Loya<span>Box</span> ⚡</div>
+      <div class="footer-tagline">Smart vending machine buat<br>tempat kerja modern.</div>
+      <div class="footer-doodle">made with ☕ & semangat 45</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Navigasi</div>
+      <div class="footer-links">
+        <a href="#about">Tentang LoyaBox</a>
+        <a href="#machines">Tipe Mesin</a>
+        <a href="#placement">Lokasi Penempatan</a>
+        <a href="#contact">Hubungi Kami</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Kontak</div>
+      <div class="footer-contact">
+        <a href="https://wa.me/6287784217444" target="_blank" class="footer-contact-item">
+          <span>📱</span> +62 877-8421-7444
+        </a>
+        <a href="mailto:loyalin.id@gmail.com" class="footer-contact-item">
+          <span>📧</span> loyalin.id@gmail.com
+        </a>
+        <div class="footer-contact-item">
+          <span>📍</span> Jl. Melur Permai No.1,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tampan, Pekanbaru, Riau
+        </div>
+        <div class="footer-contact-item">
+          <span>🕐</span> Senin–Jumat, 09.00–17.00
+        </div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Lokasi Kami</div>
+      <div class="footer-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.3!2d101.4076668!3d0.452526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a9503065f187%3A0x2e6acf6c5fac75d8!2sLoyaBox!5e0!3m2!1sid!2sid!4v1"
+          width="100%" height="140" style="border:2px solid #1A1A1A;border-radius:12px;display:block;"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <a href="https://maps.app.goo.gl/xFVuqCuVUWSMXEcy6" target="_blank" class="footer-maps-link">Buka di Google Maps →</a>
+      </div>
+    </div>
   </div>
-  <div class="footer-doodle">made with ☕ & semangat 45</div>
+  <div class="footer-bottom">
+    <div>© 2025 LoyaBox. All rights reserved.</div>
+    <div style="font-family:'Caveat',cursive;font-size:15px;">Pekanbaru, Riau, Indonesia 🇮🇩</div>
+  </div>
 </footer>
 
 <script>
