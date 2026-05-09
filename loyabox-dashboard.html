@@ -8,192 +8,72 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
-  --bg: #0F1117;
-  --bg2: #161820;
-  --bg3: #1E2028;
-  --card: #1E2028;
-  --card2: #252730;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.12);
-  --text: #F0F0F0;
-  --text2: #9A9BAD;
-  --text3: #5E5F70;
-  --blue: #2563EB;
-  --blue-light: #3B82F6;
-  --blue-dim: rgba(37,99,235,0.15);
-  --green: #10B981;
-  --green-dim: rgba(16,185,129,0.15);
-  --amber: #F59E0B;
-  --amber-dim: rgba(245,158,11,0.15);
-  --red: #EF4444;
-  --red-dim: rgba(239,68,68,0.15);
-  --purple: #8B5CF6;
-  --purple-dim: rgba(139,92,246,0.15);
-  --radius: 14px;
-  --radius-sm: 8px;
+  --bg: #0F1117; --bg2: #161820; --bg3: #1E2028; --card: #1E2028; --card2: #252730;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
+  --text: #F0F0F0; --text2: #9A9BAD; --text3: #5E5F70;
+  --blue: #2563EB; --blue-light: #3B82F6; --blue-dim: rgba(37,99,235,0.15);
+  --green: #10B981; --green-dim: rgba(16,185,129,0.15);
+  --amber: #F59E0B; --amber-dim: rgba(245,158,11,0.15);
+  --red: #EF4444; --red-dim: rgba(239,68,68,0.15);
+  --purple: #8B5CF6; --purple-dim: rgba(139,92,246,0.15);
+  --radius: 14px; --radius-sm: 8px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:var(--bg); color:var(--text); font-family:'Nunito',sans-serif; display:flex; height:100vh; overflow:hidden; font-size:14px; }
-
-/* SIDEBAR */
-.sidebar {
-  width: 220px; min-width:220px; background:var(--bg2);
-  border-right:1px solid var(--border);
-  display:flex; flex-direction:column;
-  padding:0; overflow:hidden;
-}
-.sidebar-logo {
-  padding:20px 20px 16px;
-  border-bottom:1px solid var(--border);
-}
+.sidebar { width:220px; min-width:220px; background:var(--bg2); border-right:1px solid var(--border); display:flex; flex-direction:column; overflow:hidden; }
+.sidebar-logo { padding:20px 20px 16px; border-bottom:1px solid var(--border); }
 .logo-text { font-weight:900; font-size:18px; letter-spacing:-0.5px; }
 .logo-text span { color:var(--blue-light); }
 .logo-sub { font-size:11px; color:var(--text3); font-weight:600; margin-top:2px; }
-
-.role-switch {
-  margin:12px 16px;
-  background:var(--bg3); border-radius:var(--radius-sm);
-  padding:4px; display:flex; gap:4px;
-}
-.role-btn {
-  flex:1; padding:6px 8px; border-radius:6px;
-  font-size:11px; font-weight:800; cursor:pointer;
-  border:none; background:transparent; color:var(--text2);
-  transition:all 0.2s; font-family:'Nunito',sans-serif;
-  text-align:center;
-}
+.role-switch { margin:12px 16px; background:var(--bg3); border-radius:var(--radius-sm); padding:4px; display:flex; gap:4px; }
+.role-btn { flex:1; padding:6px 8px; border-radius:6px; font-size:11px; font-weight:800; cursor:pointer; border:none; background:transparent; color:var(--text2); transition:all 0.2s; font-family:'Nunito',sans-serif; text-align:center; }
 .role-btn.active { background:var(--blue); color:white; }
-
 .nav-section { padding:8px 12px 4px; font-size:10px; font-weight:800; color:var(--text3); letter-spacing:1px; text-transform:uppercase; }
-.nav-item {
-  display:flex; align-items:center; gap:10px;
-  padding:9px 12px; margin:1px 8px; border-radius:var(--radius-sm);
-  cursor:pointer; color:var(--text2); font-weight:700; font-size:13px;
-  transition:all 0.15s; position:relative;
-}
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; margin:1px 8px; border-radius:var(--radius-sm); cursor:pointer; color:var(--text2); font-weight:700; font-size:13px; transition:all 0.15s; position:relative; }
 .nav-item:hover { background:var(--bg3); color:var(--text); }
 .nav-item.active { background:var(--blue-dim); color:var(--blue-light); }
-.nav-item.active::before {
-  content:''; position:absolute; left:0; top:50%; transform:translateY(-50%);
-  width:3px; height:60%; background:var(--blue-light); border-radius:0 3px 3px 0;
-}
+.nav-item.active::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:3px; height:60%; background:var(--blue-light); border-radius:0 3px 3px 0; }
 .nav-icon { font-size:16px; width:20px; text-align:center; }
-.nav-badge {
-  margin-left:auto; background:var(--red); color:white;
-  font-size:10px; font-weight:800; padding:2px 6px; border-radius:100px;
-}
-
-.sidebar-footer {
-  margin-top:auto; padding:12px 16px;
-  border-top:1px solid var(--border);
-}
+.nav-badge { margin-left:auto; background:var(--red); color:white; font-size:10px; font-weight:800; padding:2px 6px; border-radius:100px; }
+.sidebar-footer { margin-top:auto; padding:12px 16px; border-top:1px solid var(--border); }
 .user-row { display:flex; align-items:center; gap:10px; }
-.avatar {
-  width:32px; height:32px; border-radius:50%;
-  background:var(--blue); display:flex; align-items:center;
-  justify-content:center; font-weight:900; font-size:13px; color:white;
-  flex-shrink:0;
-}
+.avatar { width:32px; height:32px; border-radius:50%; background:var(--blue); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; color:white; flex-shrink:0; }
 .user-name { font-weight:800; font-size:13px; }
 .user-role { font-size:11px; color:var(--text3); }
-
-/* MAIN */
 .main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
-
-/* TOPBAR */
-.topbar {
-  padding:14px 24px; border-bottom:1px solid var(--border);
-  display:flex; align-items:center; justify-content:space-between;
-  background:var(--bg2); flex-shrink:0;
-}
+.topbar { padding:14px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:var(--bg2); flex-shrink:0; }
 .page-title { font-weight:900; font-size:18px; letter-spacing:-0.3px; }
 .page-sub { font-size:12px; color:var(--text2); margin-top:1px; }
 .topbar-right { display:flex; align-items:center; gap:12px; }
-.topbar-pill {
-  display:flex; align-items:center; gap:6px;
-  padding:7px 14px; border-radius:100px;
-  font-size:12px; font-weight:700;
-  border:1px solid var(--border2); background:var(--bg3);
-  cursor:pointer; color:var(--text2);
-  transition:all 0.15s;
-}
+.topbar-pill { display:flex; align-items:center; gap:6px; padding:7px 14px; border-radius:100px; font-size:12px; font-weight:700; border:1px solid var(--border2); background:var(--bg3); cursor:pointer; color:var(--text2); transition:all 0.15s; }
 .topbar-pill:hover { border-color:var(--blue); color:var(--blue-light); }
-.live-dot {
-  width:7px; height:7px; border-radius:50%; background:var(--green);
-  animation: pulse 2s infinite;
-}
+.live-dot { width:7px; height:7px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
-.notif-btn {
-  width:34px; height:34px; border-radius:var(--radius-sm);
-  background:var(--bg3); border:1px solid var(--border);
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; font-size:16px; position:relative;
-  color:var(--text2); transition:all 0.15s;
-}
-.notif-btn:hover { border-color:var(--border2); color:var(--text); }
-.notif-dot {
-  position:absolute; top:6px; right:6px;
-  width:6px; height:6px; border-radius:50%; background:var(--red);
-}
-
-/* CONTENT */
-.content {
-  flex:1; overflow-y:auto; padding:20px 24px;
-  display:flex; flex-direction:column; gap:16px;
-}
+.notif-btn { width:34px; height:34px; border-radius:var(--radius-sm); background:var(--bg3); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; position:relative; color:var(--text2); }
+.notif-dot { position:absolute; top:6px; right:6px; width:6px; height:6px; border-radius:50%; background:var(--red); }
+.content { flex:1; overflow-y:auto; padding:20px 24px; display:flex; flex-direction:column; gap:16px; }
 .content::-webkit-scrollbar { width:4px; }
-.content::-webkit-scrollbar-track { background:transparent; }
 .content::-webkit-scrollbar-thumb { background:var(--border2); border-radius:4px; }
-
-/* PANELS */
 .panel { display:none; flex-direction:column; gap:16px; }
 .panel.active { display:flex; }
-
-/* STAT CARDS ROW */
 .stat-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
-.stat-card {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:var(--radius); padding:16px 18px;
-  transition:border-color 0.2s;
-}
-.stat-card:hover { border-color:var(--border2); }
+.stat-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; }
 .stat-label { font-size:11px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
 .stat-val { font-size:26px; font-weight:900; letter-spacing:-1px; margin-bottom:4px; }
-.stat-change { font-size:12px; font-weight:700; display:flex; align-items:center; gap:4px; }
-.up { color:var(--green); }
-.down { color:var(--red); }
-.neutral { color:var(--text2); }
-.stat-icon { font-size:15px; }
-
-/* GRID LAYOUTS */
+.stat-change { font-size:12px; font-weight:700; }
+.up { color:var(--green); } .down { color:var(--red); } .neutral { color:var(--text2); }
+.c-green { color:var(--green); } .c-amber { color:var(--amber); } .c-red { color:var(--red); } .c-blue { color:var(--blue-light); }
 .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .grid-3 { display:grid; grid-template-columns:2fr 1fr; gap:12px; }
 .grid-3b { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
-
-/* CARD */
-.card {
-  background:var(--card); border:1px solid var(--border);
-  border-radius:var(--radius); padding:18px 20px;
-  transition:border-color 0.2s;
-}
+.card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; }
 .card:hover { border-color:var(--border2); }
 .card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
 .card-title { font-weight:800; font-size:14px; }
 .card-sub { font-size:11px; color:var(--text2); margin-top:2px; }
-.card-badge {
-  font-size:11px; font-weight:700; padding:4px 10px;
-  border-radius:100px; border:1px solid var(--border2);
-  color:var(--text2);
-}
-
-/* MACHINE LIST */
+.card-badge { font-size:11px; font-weight:700; padding:4px 10px; border-radius:100px; border:1px solid var(--border2); color:var(--text2); }
 .machine-list { display:flex; flex-direction:column; gap:8px; }
-.machine-row {
-  display:flex; align-items:center; gap:12px;
-  padding:10px 12px; border-radius:var(--radius-sm);
-  background:var(--bg3); cursor:pointer; transition:all 0.15s;
-  border:1px solid transparent;
-}
+.machine-row { display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:var(--radius-sm); background:var(--bg3); cursor:pointer; transition:all 0.15s; border:1px solid transparent; }
 .machine-row:hover { border-color:var(--border2); }
 .machine-row.selected { border-color:var(--blue); background:var(--blue-dim); }
 .machine-emoji { font-size:22px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; background:var(--card2); border-radius:8px; }
@@ -202,27 +82,14 @@ body { background:var(--bg); color:var(--text); font-family:'Nunito',sans-serif;
 .machine-loc { font-size:11px; color:var(--text2); margin-top:1px; }
 .machine-status { display:flex; align-items:center; gap:5px; font-size:11px; font-weight:700; }
 .status-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
-.s-online { background:var(--green); }
-.s-warn { background:var(--amber); }
-.s-offline { background:var(--red); }
-.c-green { color:var(--green); }
-.c-amber { color:var(--amber); }
-.c-red { color:var(--red); }
-.c-blue { color:var(--blue-light); }
-
-/* STOCK BAR */
+.s-online { background:var(--green); } .s-warn { background:var(--amber); } .s-offline { background:var(--red); }
 .stock-item { margin-bottom:12px; }
 .stock-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
-.stock-name { font-size:13px; font-weight:700; display:flex; align-items:center; gap:6px; }
+.stock-name { font-size:13px; font-weight:700; }
 .stock-count { font-size:12px; font-weight:800; }
 .stock-bar-bg { height:6px; background:var(--bg3); border-radius:3px; overflow:hidden; }
 .stock-bar { height:100%; border-radius:3px; transition:width 0.6s ease; }
-.bar-green { background:var(--green); }
-.bar-amber { background:var(--amber); }
-.bar-red { background:var(--red); }
-.bar-blue { background:var(--blue-light); }
-
-/* TRANSACTION TABLE */
+.bar-green { background:var(--green); } .bar-amber { background:var(--amber); } .bar-red { background:var(--red); }
 .tx-table { width:100%; border-collapse:collapse; }
 .tx-table th { font-size:11px; font-weight:700; color:var(--text2); padding:6px 10px; text-align:left; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid var(--border); }
 .tx-table td { padding:9px 10px; font-size:13px; border-bottom:1px solid var(--border); }
@@ -232,148 +99,79 @@ body { background:var(--bg); color:var(--text); font-family:'Nunito',sans-serif;
 .pill-coffee { background:var(--blue-dim); color:var(--blue-light); }
 .pill-snack { background:var(--amber-dim); color:var(--amber); }
 .pill-health { background:var(--green-dim); color:var(--green); }
-
-/* ALERT LIST */
 .alert-list { display:flex; flex-direction:column; gap:8px; }
-.alert-item {
-  display:flex; align-items:flex-start; gap:10px;
-  padding:10px 12px; border-radius:var(--radius-sm);
-  border-left:3px solid;
-}
+.alert-item { display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border-radius:var(--radius-sm); border-left:3px solid; }
 .alert-item.alert-red { background:var(--red-dim); border-color:var(--red); }
 .alert-item.alert-amber { background:var(--amber-dim); border-color:var(--amber); }
 .alert-item.alert-blue { background:var(--blue-dim); border-color:var(--blue-light); }
-.alert-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+.alert-icon { font-size:16px; flex-shrink:0; }
 .alert-title { font-size:13px; font-weight:800; }
 .alert-desc { font-size:12px; color:var(--text2); margin-top:2px; }
 .alert-time { font-size:11px; color:var(--text3); margin-top:3px; }
-
-/* PROGRESS RING */
 .ring-row { display:flex; gap:16px; align-items:center; }
 .ring-wrap { position:relative; width:70px; height:70px; flex-shrink:0; }
 .ring-wrap svg { transform:rotate(-90deg); }
 .ring-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
 .ring-val { font-size:14px; font-weight:900; }
 .ring-lbl { font-size:9px; color:var(--text2); font-weight:700; }
-
-/* MAINTENANCE CHECKLIST */
 .check-list { display:flex; flex-direction:column; gap:6px; }
-.check-item {
-  display:flex; align-items:center; gap:10px;
-  padding:8px 10px; border-radius:var(--radius-sm);
-  background:var(--bg3); cursor:pointer;
-}
-.check-box {
-  width:18px; height:18px; border-radius:4px;
-  border:2px solid var(--border2); flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-  font-size:11px; transition:all 0.15s;
-}
+.check-item { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:var(--radius-sm); background:var(--bg3); cursor:pointer; }
+.check-box { width:18px; height:18px; border-radius:4px; border:2px solid var(--border2); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; }
 .check-box.done { background:var(--green); border-color:var(--green); color:white; }
 .check-text { font-size:13px; font-weight:700; flex:1; }
 .check-text.done-text { text-decoration:line-through; color:var(--text2); }
 .check-machine { font-size:11px; color:var(--text2); }
-
-/* MINI CHART SPARKLINE */
-.sparkline { display:flex; align-items:flex-end; gap:3px; height:40px; }
-.spark-bar { flex:1; background:var(--blue-dim); border-radius:3px 3px 0 0; transition:background 0.2s; min-height:4px; }
-.spark-bar:hover { background:var(--blue); }
-.spark-bar.today { background:var(--blue); }
-
-/* REVENUE BREAKDOWN */
-.rev-item { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
-.rev-item:last-child { border:none; }
-.rev-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-.rev-name { flex:1; font-size:13px; font-weight:700; }
-.rev-val { font-size:13px; font-weight:800; }
-.rev-pct { font-size:11px; color:var(--text2); margin-left:6px; }
-
-/* TECH SPECIFIC */
 .task-priority { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
 .pri-tag { padding:4px 10px; border-radius:100px; font-size:11px; font-weight:800; border:1px solid; cursor:pointer; }
 .pri-urgent { border-color:var(--red); color:var(--red); background:var(--red-dim); }
 .pri-normal { border-color:var(--border2); color:var(--text2); background:transparent; }
-
-.route-card {
-  padding:12px; background:var(--bg3); border-radius:var(--radius-sm);
-  display:flex; gap:12px; align-items:center; margin-bottom:8px;
-  cursor:pointer; border:1px solid transparent; transition:all 0.15s;
-}
+.route-card { padding:12px; background:var(--bg3); border-radius:var(--radius-sm); display:flex; gap:12px; align-items:center; margin-bottom:8px; cursor:pointer; border:1px solid transparent; transition:all 0.15s; }
 .route-card:hover { border-color:var(--border2); }
 .route-num { width:28px; height:28px; border-radius:50%; background:var(--blue); color:white; font-weight:900; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .route-info { flex:1; }
 .route-name { font-size:13px; font-weight:800; }
 .route-meta { font-size:11px; color:var(--text2); margin-top:1px; }
 .route-status { font-size:12px; font-weight:700; }
-
-/* TOOLTIP style ticker */
-.caveat { font-family:'Caveat',cursive; }
+.rev-item { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+.rev-item:last-child { border:none; }
+.rev-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.rev-name { flex:1; font-size:13px; font-weight:700; }
+.rev-val { font-size:13px; font-weight:800; }
+.rev-pct { font-size:11px; color:var(--text2); margin-left:6px; }
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sidebar-logo">
     <div class="logo-text">Loya<span>Box</span> ⚡</div>
     <div class="logo-sub">Vending Intelligence</div>
   </div>
-
   <div class="role-switch">
-    <button class="role-btn active" onclick="setRole('owner', this)">👔 Owner</button>
-    <button class="role-btn" onclick="setRole('tech', this)">🔧 Teknisi</button>
+    <button class="role-btn active" onclick="setRole('owner',this)">👔 Owner</button>
+    <button class="role-btn" onclick="setRole('tech',this)">🔧 Teknisi</button>
   </div>
-
-  <!-- OWNER NAV -->
   <div id="nav-owner">
     <div class="nav-section">Overview</div>
-    <div class="nav-item active" onclick="showPage('overview', this)">
-      <span class="nav-icon">📊</span> Dashboard
-    </div>
-    <div class="nav-item" onclick="showPage('revenue', this)">
-      <span class="nav-icon">💰</span> Revenue
-    </div>
+    <div class="nav-item active" onclick="showPage('overview',this)"><span class="nav-icon">📊</span> Dashboard</div>
+    <div class="nav-item" onclick="showPage('revenue',this)"><span class="nav-icon">💰</span> Revenue</div>
     <div class="nav-section">Mesin</div>
-    <div class="nav-item" onclick="showPage('machines', this)">
-      <span class="nav-icon">🤖</span> Semua Mesin
-    </div>
-    <div class="nav-item" onclick="showPage('stock', this)">
-      <span class="nav-icon">📦</span> Stok & Produk
-      <span class="nav-badge">3</span>
-    </div>
+    <div class="nav-item" onclick="showPage('machines',this)"><span class="nav-icon">🤖</span> Semua Mesin</div>
+    <div class="nav-item" onclick="showPage('stock',this)"><span class="nav-icon">📦</span> Stok & Produk</div>
     <div class="nav-section">Laporan</div>
-    <div class="nav-item" onclick="showPage('transactions', this)">
-      <span class="nav-icon">🧾</span> Transaksi
-    </div>
-    <div class="nav-item" onclick="showPage('alerts', this)">
-      <span class="nav-icon">🔔</span> Alerts
-      <span class="nav-badge">5</span>
-    </div>
+    <div class="nav-item" onclick="showPage('transactions',this)"><span class="nav-icon">🧾</span> Transaksi</div>
+    <div class="nav-item" onclick="showPage('alerts',this)"><span class="nav-icon">🔔</span> Alerts <span class="nav-badge">5</span></div>
   </div>
-
-  <!-- TECH NAV -->
   <div id="nav-tech" style="display:none;">
     <div class="nav-section">Tugas Hari Ini</div>
-    <div class="nav-item active" onclick="showPage('tech-home', this)">
-      <span class="nav-icon">📋</span> Checklist
-      <span class="nav-badge">4</span>
-    </div>
-    <div class="nav-item" onclick="showPage('tech-route', this)">
-      <span class="nav-icon">🗺️</span> Rute Servis
-    </div>
+    <div class="nav-item active" onclick="showPage('tech-home',this)"><span class="nav-icon">📋</span> Checklist <span class="nav-badge">4</span></div>
+    <div class="nav-item" onclick="showPage('tech-route',this)"><span class="nav-icon">🗺️</span> Rute Servis</div>
     <div class="nav-section">Mesin</div>
-    <div class="nav-item" onclick="showPage('tech-status', this)">
-      <span class="nav-icon">🔍</span> Status Real-time
-    </div>
-    <div class="nav-item" onclick="showPage('tech-refill', this)">
-      <span class="nav-icon">📥</span> Isi Ulang Stok
-    </div>
+    <div class="nav-item" onclick="showPage('tech-status',this)"><span class="nav-icon">🔍</span> Status Real-time</div>
+    <div class="nav-item" onclick="showPage('tech-refill',this)"><span class="nav-icon">📥</span> Isi Ulang Stok</div>
     <div class="nav-section">Laporan</div>
-    <div class="nav-item" onclick="showPage('tech-report', this)">
-      <span class="nav-icon">📝</span> Laporan Kunjungan
-    </div>
+    <div class="nav-item" onclick="showPage('tech-report',this)"><span class="nav-icon">📝</span> Laporan Kunjungan</div>
   </div>
-
   <div class="sidebar-footer">
     <div class="user-row">
       <div class="avatar" id="user-avatar">RK</div>
@@ -385,252 +183,121 @@ body { background:var(--bg); color:var(--text); font-family:'Nunito',sans-serif;
   </div>
 </aside>
 
-<!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <div>
       <div class="page-title" id="page-title">Dashboard Overview</div>
-      <div class="page-sub" id="page-sub">Kamis, 8 Mei 2025 · Data live</div>
+      <div class="page-sub">LoyaBox · Pekanbaru, Riau · <span id="live-time"></span></div>
     </div>
     <div class="topbar-right">
       <div class="topbar-pill"><span class="live-dot"></span> Live</div>
       <div class="topbar-pill">📅 Hari Ini</div>
-      <div class="topbar-pill">☕ 12 Mesin Aktif</div>
+      <div class="topbar-pill" id="topbar-machines">🤖 5 Mesin</div>
       <div class="notif-btn">🔔<div class="notif-dot"></div></div>
     </div>
   </div>
 
-  <div class="content" id="content">
+  <div class="content">
 
-    <!-- ===== OWNER: OVERVIEW ===== -->
+    <!-- OVERVIEW -->
     <div class="panel active" id="page-overview">
       <div class="stat-row">
-        <div class="stat-card">
-          <div class="stat-label"><span class="stat-icon">💰</span> Revenue Hari Ini</div>
-          <div class="stat-val" style="color:var(--green)">Rp 4,28jt</div>
-          <div class="stat-change up">▲ 12.4% vs kemarin</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label"><span class="stat-icon">🧾</span> Total Transaksi</div>
-          <div class="stat-val">847</div>
-          <div class="stat-change up">▲ 67 transaksi</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label"><span class="stat-icon">🤖</span> Mesin Online</div>
-          <div class="stat-val">11<span style="font-size:16px;color:var(--text2)">/12</span></div>
-          <div class="stat-change c-amber">⚠ 1 perlu perhatian</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label"><span class="stat-icon">⭐</span> Avg Rating</div>
-          <div class="stat-val">4.7</div>
-          <div class="stat-change neutral">dari 312 ulasan</div>
-        </div>
+        <div class="stat-card"><div class="stat-label">💰 Revenue Hari Ini</div><div class="stat-val" style="color:var(--green)">Rp 4,28jt</div><div class="stat-change up">▲ 12.4% vs kemarin</div></div>
+        <div class="stat-card"><div class="stat-label">🧾 Total Transaksi</div><div class="stat-val">847</div><div class="stat-change up">▲ 67 transaksi</div></div>
+        <div class="stat-card"><div class="stat-label">🤖 Mesin Aktif</div><div class="stat-val" id="statMachineOnline">—</div><div class="stat-change c-blue">Reyeah Vending</div></div>
+        <div class="stat-card"><div class="stat-label">📦 Total Produk</div><div class="stat-val" id="statTotalProducts">—</div><div class="stat-change neutral">dari semua mesin</div></div>
       </div>
-
       <div class="grid-3">
         <div class="card">
-          <div class="card-header">
-            <div>
-              <div class="card-title">Penjualan 7 Hari Terakhir</div>
-              <div class="card-sub">Revenue harian (Rp)</div>
-            </div>
-            <div class="card-badge">Minggu Ini</div>
-          </div>
+          <div class="card-header"><div><div class="card-title">Penjualan 7 Hari Terakhir</div><div class="card-sub">Revenue harian (Rp)</div></div><div class="card-badge">Minggu Ini</div></div>
           <canvas id="chartRevenue" height="90"></canvas>
         </div>
         <div class="card">
-          <div class="card-header">
-            <div>
-              <div class="card-title">Produk Terlaris</div>
-              <div class="card-sub">Hari ini</div>
-            </div>
-          </div>
+          <div class="card-header"><div><div class="card-title">Produk Terlaris</div><div class="card-sub">Hari ini</div></div></div>
           <canvas id="chartDoughnut" height="120"></canvas>
         </div>
       </div>
-
       <div class="grid-2">
         <div class="card">
-          <div class="card-header">
-            <div>
-              <div class="card-title">Status Mesin</div>
-              <div class="card-sub">Semua lokasi</div>
-            </div>
-          </div>
-          <div class="machine-list">
-            <div class="machine-row selected">
-              <div class="machine-emoji">☕</div>
-              <div class="machine-info">
-                <div class="machine-name">LBX-001 · Brew</div>
-                <div class="machine-loc">Gedung Sinar Mas, Lt. 3</div>
-              </div>
-              <div class="machine-status"><div class="status-dot s-online"></div><span class="c-green">Online</span></div>
-            </div>
-            <div class="machine-row">
-              <div class="machine-emoji">🍿</div>
-              <div class="machine-info">
-                <div class="machine-name">LBX-002 · Munch</div>
-                <div class="machine-loc">GoWork Sudirman</div>
-              </div>
-              <div class="machine-status"><div class="status-dot s-online"></div><span class="c-green">Online</span></div>
-            </div>
-            <div class="machine-row">
-              <div class="machine-emoji">💊</div>
-              <div class="machine-info">
-                <div class="machine-name">LBX-003 · Care</div>
-                <div class="machine-loc">Kampus UI, Kantin Baru</div>
-              </div>
-              <div class="machine-status"><div class="status-dot s-warn"></div><span class="c-amber">Stok Low</span></div>
-            </div>
-            <div class="machine-row">
-              <div class="machine-emoji">☕</div>
-              <div class="machine-info">
-                <div class="machine-name">LBX-004 · Brew</div>
-                <div class="machine-loc">SPKLU Thamrin</div>
-              </div>
-              <div class="machine-status"><div class="status-dot s-online"></div><span class="c-green">Online</span></div>
-            </div>
-            <div class="machine-row">
-              <div class="machine-emoji">☕</div>
-              <div class="machine-info">
-                <div class="machine-name">LBX-005 · Brew</div>
-                <div class="machine-loc">Apartemen Taman Anggrek</div>
-              </div>
-              <div class="machine-status"><div class="status-dot s-offline"></div><span class="c-red">Offline</span></div>
-            </div>
+          <div class="card-header"><div><div class="card-title">Status Mesin</div><div class="card-sub">Data dari Reyeah API</div></div></div>
+          <div class="machine-list" id="machineListOverview">
+            <div style="text-align:center;padding:20px;color:var(--text2)"><div style="font-size:24px;margin-bottom:8px">🔄</div>Loading data mesin...</div>
           </div>
         </div>
-
         <div class="card">
-          <div class="card-header">
-            <div>
-              <div class="card-title">Transaksi Terbaru</div>
-              <div class="card-sub">Update real-time</div>
-            </div>
-          </div>
+          <div class="card-header"><div><div class="card-title">Transaksi Terbaru</div><div class="card-sub">Data dummy</div></div></div>
           <table class="tx-table">
-            <thead>
-              <tr>
-                <th>Produk</th>
-                <th>Mesin</th>
-                <th>Waktu</th>
-                <th>Bayar</th>
-                <th>Rp</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Produk</th><th>Mesin</th><th>Waktu</th><th>Bayar</th><th>Rp</th></tr></thead>
             <tbody>
-              <tr><td><span class="tx-pill pill-coffee">Latte</span></td><td>LBX-001</td><td>09:41</td><td>QRIS</td><td style="font-weight:800">25.000</td></tr>
-              <tr><td><span class="tx-pill pill-snack">Granola</span></td><td>LBX-002</td><td>09:38</td><td>GoPay</td><td style="font-weight:800">18.000</td></tr>
-              <tr><td><span class="tx-pill pill-coffee">Espresso</span></td><td>LBX-001</td><td>09:35</td><td>OVO</td><td style="font-weight:800">22.000</td></tr>
-              <tr><td><span class="tx-pill pill-health">Vitamin C</span></td><td>LBX-003</td><td>09:30</td><td>QRIS</td><td style="font-weight:800">35.000</td></tr>
-              <tr><td><span class="tx-pill pill-coffee">Matcha</span></td><td>LBX-004</td><td>09:28</td><td>Dana</td><td style="font-weight:800">28.000</td></tr>
-              <tr><td><span class="tx-pill pill-snack">Kripik</span></td><td>LBX-002</td><td>09:25</td><td>QRIS</td><td style="font-weight:800">12.000</td></tr>
+              <tr><td><span class="tx-pill pill-snack">Snack</span></td><td>PLN ICON+</td><td>09:41</td><td>QRIS</td><td style="font-weight:800">15.000</td></tr>
+              <tr><td><span class="tx-pill pill-snack">Minuman</span></td><td>Kopi Tiam</td><td>09:38</td><td>GoPay</td><td style="font-weight:800">12.000</td></tr>
+              <tr><td><span class="tx-pill pill-snack">Snack</span></td><td>Bhadrika</td><td>09:35</td><td>OVO</td><td style="font-weight:800">18.000</td></tr>
+              <tr><td><span class="tx-pill pill-snack">Minuman</span></td><td>Chinos Gobah</td><td>09:30</td><td>QRIS</td><td style="font-weight:800">10.000</td></tr>
+              <tr><td><span class="tx-pill pill-snack">Snack</span></td><td>LOY-D12</td><td>09:28</td><td>Dana</td><td style="font-weight:800">8.000</td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ===== OWNER: REVENUE ===== -->
+    <!-- REVENUE -->
     <div class="panel" id="page-revenue">
       <div class="stat-row">
-        <div class="stat-card">
-          <div class="stat-label">💰 Revenue Bulan Ini</div>
-          <div class="stat-val" style="color:var(--green)">Rp 87,4jt</div>
-          <div class="stat-change up">▲ 18.2% vs bulan lalu</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">📈 Avg / Mesin / Hari</div>
-          <div class="stat-val">Rp 726rb</div>
-          <div class="stat-change up">▲ 5.1%</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">🏆 Mesin Terbaik</div>
-          <div class="stat-val" style="font-size:18px">LBX-001</div>
-          <div class="stat-change c-blue">Rp 12.4jt bulan ini</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">💳 Top Payment</div>
-          <div class="stat-val" style="font-size:18px">QRIS</div>
-          <div class="stat-change neutral">64% dari transaksi</div>
-        </div>
+        <div class="stat-card"><div class="stat-label">💰 Revenue Bulan Ini</div><div class="stat-val" style="color:var(--green)">Rp 87,4jt</div><div class="stat-change up">▲ 18.2% vs bulan lalu</div></div>
+        <div class="stat-card"><div class="stat-label">📈 Avg / Mesin / Hari</div><div class="stat-val">Rp 726rb</div><div class="stat-change up">▲ 5.1%</div></div>
+        <div class="stat-card"><div class="stat-label">🏆 Mesin Terbaik</div><div class="stat-val" style="font-size:18px">PLN ICON+</div><div class="stat-change c-blue">Chinos Panam</div></div>
+        <div class="stat-card"><div class="stat-label">💳 Top Payment</div><div class="stat-val" style="font-size:18px">QRIS</div><div class="stat-change neutral">64% dari transaksi</div></div>
       </div>
       <div class="grid-3">
         <div class="card">
-          <div class="card-header">
-            <div><div class="card-title">Revenue 30 Hari</div><div class="card-sub">Trend harian</div></div>
-          </div>
+          <div class="card-header"><div><div class="card-title">Revenue 30 Hari</div><div class="card-sub">Trend harian</div></div></div>
           <canvas id="chartMonthly" height="90"></canvas>
         </div>
         <div class="card">
-          <div class="card-header">
-            <div><div class="card-title">Breakdown per Tipe</div><div class="card-sub">Bulan ini</div></div>
-          </div>
-          <div class="rev-item"><div class="rev-dot" style="background:var(--blue)"></div><div class="rev-name">☕ Coffee Machine</div><div class="rev-val">Rp 48,2jt</div><div class="rev-pct">55%</div></div>
-          <div class="rev-item"><div class="rev-dot" style="background:var(--amber)"></div><div class="rev-name">🍿 Snack Machine</div><div class="rev-val">Rp 26,7jt</div><div class="rev-pct">31%</div></div>
-          <div class="rev-item"><div class="rev-dot" style="background:var(--green)"></div><div class="rev-name">💊 Health Machine</div><div class="rev-val">Rp 12,5jt</div><div class="rev-pct">14%</div></div>
-          <div style="margin-top:16px; padding-top:12px; border-top:1px solid var(--border);">
-            <div class="card-title" style="margin-bottom:10px">Top Lokasi</div>
-            <div class="rev-item"><div class="rev-dot" style="background:var(--purple)"></div><div class="rev-name">Gedung Sinar Mas</div><div class="rev-val">Rp 12.4jt</div></div>
-            <div class="rev-item"><div class="rev-dot" style="background:var(--purple)"></div><div class="rev-name">GoWork Sudirman</div><div class="rev-val">Rp 9.8jt</div></div>
-            <div class="rev-item"><div class="rev-dot" style="background:var(--purple)"></div><div class="rev-name">SPKLU Thamrin</div><div class="rev-val">Rp 8.2jt</div></div>
-          </div>
+          <div class="card-header"><div><div class="card-title">Top Lokasi</div></div></div>
+          <div class="rev-item"><div class="rev-dot" style="background:var(--blue)"></div><div class="rev-name">PLN ICON+ · Chinos Panam</div><div class="rev-val">Rp 22jt</div></div>
+          <div class="rev-item"><div class="rev-dot" style="background:var(--amber)"></div><div class="rev-name">Kopi Tiam · Thamrin</div><div class="rev-val">Rp 18jt</div></div>
+          <div class="rev-item"><div class="rev-dot" style="background:var(--green)"></div><div class="rev-name">Chinos Gobah</div><div class="rev-val">Rp 16jt</div></div>
+          <div class="rev-item"><div class="rev-dot" style="background:var(--purple)"></div><div class="rev-name">Bhadrika</div><div class="rev-val">Rp 14jt</div></div>
+          <div class="rev-item"><div class="rev-dot" style="background:var(--red)"></div><div class="rev-name">LOY-D12 · D12</div><div class="rev-val">Rp 17jt</div></div>
         </div>
       </div>
     </div>
 
-    <!-- ===== OWNER: MACHINES ===== -->
+    <!-- MACHINES -->
     <div class="panel" id="page-machines">
       <div class="stat-row">
-        <div class="stat-card"><div class="stat-label">🟢 Online</div><div class="stat-val" style="color:var(--green)">9</div><div class="stat-change neutral">dari 12 mesin</div></div>
-        <div class="stat-card"><div class="stat-label">⚠ Warning</div><div class="stat-val" style="color:var(--amber)">2</div><div class="stat-change c-amber">Stok rendah</div></div>
-        <div class="stat-card"><div class="stat-label">🔴 Offline</div><div class="stat-val" style="color:var(--red)">1</div><div class="stat-change down">Perlu teknisi</div></div>
-        <div class="stat-card"><div class="stat-label">📍 Kota</div><div class="stat-val">3</div><div class="stat-change neutral">Jakarta, Depok, Bekasi</div></div>
+        <div class="stat-card"><div class="stat-label">🟢 Total Mesin</div><div class="stat-val" style="color:var(--green)">5</div><div class="stat-change neutral">Reyeah Vending</div></div>
+        <div class="stat-card"><div class="stat-label">📍 Lokasi</div><div class="stat-val">5</div><div class="stat-change neutral">Pekanbaru, Riau</div></div>
+        <div class="stat-card"><div class="stat-label">📦 Total Produk</div><div class="stat-val" id="statTotalProducts2">—</div><div class="stat-change neutral">dari API Reyeah</div></div>
+        <div class="stat-card"><div class="stat-label">🔗 API Status</div><div class="stat-val" id="apiStatus" style="font-size:16px">🔄</div><div class="stat-change neutral">Test environment</div></div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title">Semua Mesin</div><div class="card-badge">12 unit terdaftar</div></div>
+        <div class="card-header"><div class="card-title">Semua Mesin</div><div class="card-badge" id="machineCount">5 unit</div></div>
         <table class="tx-table">
-          <thead><tr><th>ID</th><th>Tipe</th><th>Lokasi</th><th>Status</th><th>Stok</th><th>Revenue/Hari</th><th>Last Ping</th></tr></thead>
-          <tbody>
-            <tr><td style="font-weight:800">LBX-001</td><td><span class="tx-pill pill-coffee">Brew</span></td><td>Sinar Mas Lt.3</td><td><span style="color:var(--green);font-weight:700">● Online</span></td><td>87%</td><td style="color:var(--green);font-weight:800">Rp 428rb</td><td style="color:var(--text2)">1 mnt lalu</td></tr>
-            <tr><td style="font-weight:800">LBX-002</td><td><span class="tx-pill pill-snack">Munch</span></td><td>GoWork Sudirman</td><td><span style="color:var(--green);font-weight:700">● Online</span></td><td>74%</td><td style="color:var(--green);font-weight:800">Rp 312rb</td><td style="color:var(--text2)">2 mnt lalu</td></tr>
-            <tr><td style="font-weight:800">LBX-003</td><td><span class="tx-pill pill-health">Care</span></td><td>Kampus UI</td><td><span style="color:var(--amber);font-weight:700">⚠ Stok Low</span></td><td style="color:var(--amber);font-weight:800">22%</td><td style="color:var(--green);font-weight:800">Rp 198rb</td><td style="color:var(--text2)">3 mnt lalu</td></tr>
-            <tr><td style="font-weight:800">LBX-004</td><td><span class="tx-pill pill-coffee">Brew</span></td><td>SPKLU Thamrin</td><td><span style="color:var(--green);font-weight:700">● Online</span></td><td>91%</td><td style="color:var(--green);font-weight:800">Rp 387rb</td><td style="color:var(--text2)">1 mnt lalu</td></tr>
-            <tr><td style="font-weight:800">LBX-005</td><td><span class="tx-pill pill-coffee">Brew</span></td><td>Taman Anggrek Apt</td><td><span style="color:var(--red);font-weight:700">● Offline</span></td><td style="color:var(--red)">—</td><td style="color:var(--text2)">—</td><td style="color:var(--red)">47 mnt lalu</td></tr>
+          <thead><tr><th>Machine No</th><th>Nama</th><th>Group / Lokasi</th><th>Tipe</th><th>Produk</th><th>Status API</th></tr></thead>
+          <tbody id="machineTableBody">
+            <tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text2)">🔄 Loading dari Reyeah API...</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- ===== OWNER: STOCK ===== -->
+    <!-- STOCK -->
     <div class="panel" id="page-stock">
       <div class="stat-row">
-        <div class="stat-card"><div class="stat-label">📦 Total SKU</div><div class="stat-val">34</div><div class="stat-change neutral">produk aktif</div></div>
-        <div class="stat-card"><div class="stat-label">⚠ Stok Kritis</div><div class="stat-val" style="color:var(--red)">3</div><div class="stat-change down">perlu restock segera</div></div>
-        <div class="stat-card"><div class="stat-label">🔄 Restock Hari Ini</div><div class="stat-val">2</div><div class="stat-change c-blue">terjadwal</div></div>
-        <div class="stat-card"><div class="stat-label">🏆 Best Seller</div><div class="stat-val" style="font-size:16px">Latte</div><div class="stat-change c-amber">287 terjual hari ini</div></div>
+        <div class="stat-card"><div class="stat-label">📦 Total Produk Aktif</div><div class="stat-val" id="statStockTotal">—</div><div class="stat-change neutral">dari API Reyeah</div></div>
+        <div class="stat-card"><div class="stat-label">⚠ Stok Rendah</div><div class="stat-val" id="statLowStock" style="color:var(--red)">—</div><div class="stat-change down">perlu restock</div></div>
+        <div class="stat-card"><div class="stat-label">✅ Stok Aman</div><div class="stat-val" id="statGoodStock" style="color:var(--green)">—</div><div class="stat-change up">stok cukup</div></div>
+        <div class="stat-card"><div class="stat-label">🏆 Stok Tertinggi</div><div class="stat-val" id="statTopStock" style="font-size:14px">—</div><div class="stat-change neutral"></div></div>
       </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-header"><div class="card-title">☕ Coffee Machine — LBX-001</div></div>
-          <div class="stock-item"><div class="stock-row"><div class="stock-name">☕ Espresso</div><div class="stock-count c-green">84/100</div></div><div class="stock-bar-bg"><div class="stock-bar bar-green" style="width:84%"></div></div></div>
-          <div class="stock-item"><div class="stock-row"><div class="stock-name">🥛 Latte</div><div class="stock-count c-green">71/100</div></div><div class="stock-bar-bg"><div class="stock-bar bar-green" style="width:71%"></div></div></div>
-          <div class="stock-item"><div class="stock-row"><div class="stock-name">🧋 Matcha Latte</div><div class="stock-count c-amber">28/100</div></div><div class="stock-bar-bg"><div class="stock-bar bar-amber" style="width:28%"></div></div></div>
-          <div class="stock-item"><div class="stock-row"><div class="stock-name">🍫 Choco Drink</div><div class="stock-count c-red">11/100</div></div><div class="stock-bar-bg"><div class="stock-bar bar-red" style="width:11%"></div></div></div>
-          <div class="stock-item"><div class="stock-row"><div class="stock-name">🍵 Teh Tarik</div><div class="stock-count c-green">62/100</div></div><div class="stock-bar-bg"><div class="stock-bar bar-green" style="width:62%"></div></div></div>
-        </div>
-        <div class="card">
-          <div class="card-header"><div class="card-title">🍿 Snack Machine — LBX-002</div></div>
-          <div class="stock-item"><div class="stock-row"><div class="stock-name">🍫 Cokelat Wafer</div><div class="stock-count c-green">90/100</div></div><div class="stock-bar-bg"><div class="stock-bar bar-green" style="width:90%"></div></div></div>
-          <div class="stock-item"><div class="stock-row"><div class="stock-name">🍿 Popcorn</div><div class="stock-count c-green">76/100</div></div><div class="stock-bar-bg"><div class="stock-bar bar-green" style="width:76%"></div></div></div>
-          <div class="stock-item"><div class="stock-row"><div class="stock-name">⚡ Energy Bar</div><div class="stock-count c-amber">34/100</div></div><div class="stock-bar-bg"><div class="stock-bar bar-amber" style="width:34%"></div></div></div>
-          <div class="stock-item"><div class="stock-row"><div class="stock-name">🥜 Kacang Mix</div><div class="stock-count c-red">8/100</div></div><div class="stock-bar-bg"><div class="stock-bar bar-red" style="width:8%"></div></div></div>
-          <div class="stock-item"><div class="stock-row"><div class="stock-name">🍪 Biskuit</div><div class="stock-count c-green">55/100</div></div><div class="stock-bar-bg"><div class="stock-bar bar-green" style="width:55%"></div></div></div>
-        </div>
+      <div class="card" id="stockDetailCard">
+        <div class="card-header"><div class="card-title" id="stockCardTitle">🍿 Pilih mesin untuk lihat stok</div><div class="card-badge">Klik mesin di Overview</div></div>
+        <div id="stockDetailContent" style="color:var(--text2);text-align:center;padding:40px">Klik nama mesin di halaman Overview untuk melihat detail stok produk dari Reyeah API 👆</div>
       </div>
     </div>
 
-    <!-- ===== OWNER: TRANSACTIONS ===== -->
+    <!-- TRANSACTIONS -->
     <div class="panel" id="page-transactions">
       <div class="stat-row">
         <div class="stat-card"><div class="stat-label">🧾 Total Hari Ini</div><div class="stat-val">847</div><div class="stat-change up">▲ 67 transaksi</div></div>
@@ -639,141 +306,101 @@ body { background:var(--bg); color:var(--text); font-family:'Nunito',sans-serif;
         <div class="stat-card"><div class="stat-label">⏱ Avg Waktu</div><div class="stat-val">38<span style="font-size:14px">dtk</span></div><div class="stat-change neutral">per transaksi</div></div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title">Histori Transaksi</div><div class="card-badge">Hari ini · 847 entri</div></div>
+        <div class="card-header"><div class="card-title">Histori Transaksi</div><div class="card-badge">Data dummy · akan connect ke API</div></div>
         <table class="tx-table">
-          <thead><tr><th>#</th><th>Produk</th><th>Tipe</th><th>Mesin</th><th>Lokasi</th><th>Waktu</th><th>Metode</th><th>Rp</th></tr></thead>
+          <thead><tr><th>#</th><th>Produk</th><th>Mesin</th><th>Lokasi</th><th>Waktu</th><th>Metode</th><th>Rp</th></tr></thead>
           <tbody>
-            <tr><td style="color:var(--text2)">#847</td><td>Latte Hot</td><td><span class="tx-pill pill-coffee">Coffee</span></td><td>LBX-001</td><td>Sinar Mas</td><td>09:41</td><td>QRIS</td><td style="font-weight:800">25.000</td></tr>
-            <tr><td style="color:var(--text2)">#846</td><td>Granola Bar</td><td><span class="tx-pill pill-snack">Snack</span></td><td>LBX-002</td><td>GoWork</td><td>09:38</td><td>GoPay</td><td style="font-weight:800">18.000</td></tr>
-            <tr><td style="color:var(--text2)">#845</td><td>Espresso</td><td><span class="tx-pill pill-coffee">Coffee</span></td><td>LBX-001</td><td>Sinar Mas</td><td>09:35</td><td>OVO</td><td style="font-weight:800">22.000</td></tr>
-            <tr><td style="color:var(--text2)">#844</td><td>Vitamin C</td><td><span class="tx-pill pill-health">Health</span></td><td>LBX-003</td><td>Kampus UI</td><td>09:30</td><td>QRIS</td><td style="font-weight:800">35.000</td></tr>
-            <tr><td style="color:var(--text2)">#843</td><td>Matcha Latte</td><td><span class="tx-pill pill-coffee">Coffee</span></td><td>LBX-004</td><td>SPKLU</td><td>09:28</td><td>Dana</td><td style="font-weight:800">28.000</td></tr>
-            <tr><td style="color:var(--text2)">#842</td><td>Kripik Pedas</td><td><span class="tx-pill pill-snack">Snack</span></td><td>LBX-002</td><td>GoWork</td><td>09:25</td><td>QRIS</td><td style="font-weight:800">12.000</td></tr>
-            <tr><td style="color:var(--text2)">#841</td><td>Masker KN95</td><td><span class="tx-pill pill-health">Health</span></td><td>LBX-003</td><td>Kampus UI</td><td>09:20</td><td>QRIS</td><td style="font-weight:800">15.000</td></tr>
-            <tr><td style="color:var(--text2)">#840</td><td>Cappuccino</td><td><span class="tx-pill pill-coffee">Coffee</span></td><td>LBX-001</td><td>Sinar Mas</td><td>09:15</td><td>OVO</td><td style="font-weight:800">25.000</td></tr>
+            <tr><td style="color:var(--text2)">#847</td><td>Snack A</td><td>866902936100001</td><td>Chinos Panam</td><td>09:41</td><td>QRIS</td><td style="font-weight:800">15.000</td></tr>
+            <tr><td style="color:var(--text2)">#846</td><td>Minuman B</td><td>866902936100002</td><td>Thamrin Kopitiam</td><td>09:38</td><td>GoPay</td><td style="font-weight:800">12.000</td></tr>
+            <tr><td style="color:var(--text2)">#845</td><td>Snack C</td><td>866902936200001</td><td>Chinos Gobah</td><td>09:35</td><td>OVO</td><td style="font-weight:800">18.000</td></tr>
+            <tr><td style="color:var(--text2)">#844</td><td>Minuman D</td><td>866902936200002</td><td>Bhadrika</td><td>09:30</td><td>QRIS</td><td style="font-weight:800">10.000</td></tr>
+            <tr><td style="color:var(--text2)">#843</td><td>Snack E</td><td>866902936300001</td><td>D12</td><td>09:28</td><td>Dana</td><td style="font-weight:800">8.000</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- ===== OWNER: ALERTS ===== -->
+    <!-- ALERTS -->
     <div class="panel" id="page-alerts">
       <div class="stat-row">
-        <div class="stat-card"><div class="stat-label">🔴 Kritis</div><div class="stat-val" style="color:var(--red)">2</div><div class="stat-change down">butuh aksi sekarang</div></div>
-        <div class="stat-card"><div class="stat-label">🟡 Warning</div><div class="stat-val" style="color:var(--amber)">3</div><div class="stat-change c-amber">pantau hari ini</div></div>
-        <div class="stat-card"><div class="stat-label">🔵 Info</div><div class="stat-val">7</div><div class="stat-change neutral">notifikasi baru</div></div>
-        <div class="stat-card"><div class="stat-label">✅ Selesai</div><div class="stat-val">14</div><div class="stat-change up">hari ini</div></div>
+        <div class="stat-card"><div class="stat-label">🔴 Kritis</div><div class="stat-val" style="color:var(--red)" id="alertCritical">0</div><div class="stat-change down">butuh aksi sekarang</div></div>
+        <div class="stat-card"><div class="stat-label">🟡 Warning</div><div class="stat-val" style="color:var(--amber)" id="alertWarning">0</div><div class="stat-change c-amber">stok rendah</div></div>
+        <div class="stat-card"><div class="stat-label">🔵 Info</div><div class="stat-val">3</div><div class="stat-change neutral">notifikasi baru</div></div>
+        <div class="stat-card"><div class="stat-label">✅ Semua Mesin</div><div class="stat-val">5</div><div class="stat-change up">terdaftar</div></div>
       </div>
       <div class="card">
         <div class="card-header"><div class="card-title">Alert Aktif</div></div>
-        <div class="alert-list">
-          <div class="alert-item alert-red"><div class="alert-icon">🔴</div><div><div class="alert-title">LBX-005 Offline — Taman Anggrek</div><div class="alert-desc">Mesin tidak merespons sejak 47 menit lalu. Koneksi internet atau hardware bermasalah.</div><div class="alert-time">09:01 · Teknisi sudah dinotifikasi</div></div></div>
-          <div class="alert-item alert-red"><div class="alert-icon">🔴</div><div><div class="alert-title">Stok Kritis: Kacang Mix — LBX-002</div><div class="alert-desc">Tersisa 8 unit dari kapasitas 100. Estimasi habis dalam 2 jam.</div><div class="alert-time">09:15 · Perlu restock hari ini</div></div></div>
-          <div class="alert-item alert-amber"><div class="alert-icon">⚠️</div><div><div class="alert-title">Stok Rendah: Matcha Latte — LBX-001</div><div class="alert-desc">Tersisa 28 unit. Restock disarankan sebelum sore.</div><div class="alert-time">08:45</div></div></div>
-          <div class="alert-item alert-amber"><div class="alert-icon">⚠️</div><div><div class="alert-title">Stok Rendah: Choco Drink — LBX-001</div><div class="alert-desc">Tersisa 11 unit dari kapasitas 100.</div><div class="alert-time">08:30</div></div></div>
-          <div class="alert-item alert-amber"><div class="alert-icon">⚠️</div><div><div class="alert-title">Transaksi Gagal — LBX-003 (×3)</div><div class="alert-desc">3 transaksi gagal dalam 1 jam terakhir. Kemungkinan kendala pembayaran.</div><div class="alert-time">09:10</div></div></div>
-          <div class="alert-item alert-blue"><div class="alert-icon">💙</div><div><div class="alert-title">Restock Terjadwal — LBX-001 & LBX-004</div><div class="alert-desc">Teknisi Andi dijadwalkan restock pukul 14:00 hari ini.</div><div class="alert-time">Terjadwal · 14:00</div></div></div>
+        <div class="alert-list" id="alertList">
+          <div class="alert-item alert-blue"><div class="alert-icon">💙</div><div><div class="alert-title">Dashboard terhubung ke Reyeah API</div><div class="alert-desc">Test environment aktif. Data mesin: PLN ICON+, Kopi Tiam, Chinos Gobah, Bhadrika, LOY-D12</div><div class="alert-time">Sekarang · Test env</div></div></div>
         </div>
       </div>
     </div>
 
-    <!-- ===== TECH: HOME ===== -->
+    <!-- TECH HOME -->
     <div class="panel" id="page-tech-home">
       <div class="stat-row">
-        <div class="stat-card"><div class="stat-label">📋 Tugas Hari Ini</div><div class="stat-val">6</div><div class="stat-change c-amber">4 belum selesai</div></div>
-        <div class="stat-card"><div class="stat-label">🗺️ Mesin Dikunjungi</div><div class="stat-val">2<span style="font-size:16px;color:var(--text2)">/5</span></div><div class="stat-change neutral">rute hari ini</div></div>
-        <div class="stat-card"><div class="stat-label">⚠ Urgent</div><div class="stat-val" style="color:var(--red)">1</div><div class="stat-change down">LBX-005 offline</div></div>
-        <div class="stat-card"><div class="stat-label">✅ Selesai</div><div class="stat-val" style="color:var(--green)">2</div><div class="stat-change up">dari 6 tugas</div></div>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-header"><div class="card-title">Checklist Tugas</div><div class="card-badge">Hari ini</div></div>
-          <div class="task-priority">
-            <div class="pri-tag pri-urgent">🔴 Urgent (1)</div>
-            <div class="pri-tag pri-normal">🟡 Normal (3)</div>
-            <div class="pri-tag pri-normal">✅ Selesai (2)</div>
-          </div>
-          <div class="check-list" id="checkList">
-            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">🔴</div><div class="check-text">Cek & perbaiki LBX-005 offline</div><div class="check-machine">Taman Anggrek</div></div>
-            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Restock Kacang Mix LBX-002</div><div class="check-machine">GoWork Sudirman</div></div>
-            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Restock Matcha + Choco — LBX-001</div><div class="check-machine">Sinar Mas Lt.3</div></div>
-            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Cek mekanisme slot LBX-003</div><div class="check-machine">Kampus UI</div></div>
-            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box done">✓</div><div class="check-text done-text">Pembersihan rutin LBX-001</div><div class="check-machine">Sinar Mas</div></div>
-            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box done">✓</div><div class="check-text done-text">Update firmware LBX-004</div><div class="check-machine">SPKLU Thamrin</div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header"><div class="card-title">Status Stok — Mesin Saya</div></div>
-          <div style="margin-bottom:14px"><div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px">LBX-001 · Sinar Mas</div>
-            <div class="stock-item"><div class="stock-row"><div class="stock-name">🧋 Matcha Latte</div><div class="stock-count c-amber">28%</div></div><div class="stock-bar-bg"><div class="stock-bar bar-amber" style="width:28%"></div></div></div>
-            <div class="stock-item"><div class="stock-row"><div class="stock-name">🍫 Choco Drink</div><div class="stock-count c-red">11%</div></div><div class="stock-bar-bg"><div class="stock-bar bar-red" style="width:11%"></div></div></div>
-          </div>
-          <div><div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px">LBX-002 · GoWork Sudirman</div>
-            <div class="stock-item"><div class="stock-row"><div class="stock-name">🥜 Kacang Mix</div><div class="stock-count c-red">8%</div></div><div class="stock-bar-bg"><div class="stock-bar bar-red" style="width:8%"></div></div></div>
-            <div class="stock-item"><div class="stock-row"><div class="stock-name">⚡ Energy Bar</div><div class="stock-count c-amber">34%</div></div><div class="stock-bar-bg"><div class="stock-bar bar-amber" style="width:34%"></div></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== TECH: ROUTE ===== -->
-    <div class="panel" id="page-tech-route">
-      <div class="stat-row">
-        <div class="stat-card"><div class="stat-label">📍 Total Stop</div><div class="stat-val">5</div><div class="stat-change neutral">hari ini</div></div>
-        <div class="stat-card"><div class="stat-label">🚗 Estimasi Jarak</div><div class="stat-val">24<span style="font-size:14px">km</span></div><div class="stat-change neutral">~2.5 jam perjalanan</div></div>
-        <div class="stat-card"><div class="stat-label">✅ Selesai</div><div class="stat-val">2</div><div class="stat-change up">dari 5 stop</div></div>
-        <div class="stat-card"><div class="stat-label">⏰ ETA Selesai</div><div class="stat-val" style="font-size:18px">16:30</div><div class="stat-change neutral">estimasi</div></div>
+        <div class="stat-card"><div class="stat-label">📋 Tugas Hari Ini</div><div class="stat-val">5</div><div class="stat-change c-amber">5 mesin perlu dicek</div></div>
+        <div class="stat-card"><div class="stat-label">🗺️ Mesin Dikunjungi</div><div class="stat-val">0<span style="font-size:16px;color:var(--text2)">/5</span></div><div class="stat-change neutral">rute hari ini</div></div>
+        <div class="stat-card"><div class="stat-label">📍 Area</div><div class="stat-val" style="font-size:16px">PKU</div><div class="stat-change neutral">Pekanbaru, Riau</div></div>
+        <div class="stat-card"><div class="stat-label">✅ Selesai</div><div class="stat-val" style="color:var(--green)">0</div><div class="stat-change neutral">dari 5 tugas</div></div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title">Rute Servis Hari Ini</div><div class="card-badge">Dioptimasi otomatis</div></div>
-        <div class="route-card" style="border-color:var(--green);background:var(--green-dim)"><div class="route-num" style="background:var(--green)">✓</div><div class="route-info"><div class="route-name">LBX-004 · SPKLU Thamrin</div><div class="route-meta">Update firmware · Selesai 08:30</div></div><div class="route-status c-green">Selesai</div></div>
-        <div class="route-card" style="border-color:var(--green);background:var(--green-dim)"><div class="route-num" style="background:var(--green)">✓</div><div class="route-info"><div class="route-name">LBX-001 · Sinar Mas Lt.3</div><div class="route-meta">Pembersihan rutin · Selesai 09:15</div></div><div class="route-status c-green">Selesai</div></div>
-        <div class="route-card" style="border-color:var(--blue);background:var(--blue-dim)"><div class="route-num">3</div><div class="route-info"><div class="route-name">LBX-002 · GoWork Sudirman</div><div class="route-meta">Restock kacang mix · Sekarang</div></div><div class="route-status c-blue">Sedang berjalan</div></div>
-        <div class="route-card"><div class="route-num" style="background:var(--bg3);color:var(--text2)">4</div><div class="route-info"><div class="route-name">LBX-003 · Kampus UI</div><div class="route-meta">Cek slot mekanisme · ~12:00</div></div><div class="route-status c-amber">Menunggu</div></div>
-        <div class="route-card"><div class="route-num" style="background:var(--red);color:white">!</div><div class="route-info"><div class="route-name">LBX-005 · Taman Anggrek</div><div class="route-meta">Perbaikan offline · ~14:00 · URGENT</div></div><div class="route-status c-red">Urgent</div></div>
+        <div class="card-header"><div class="card-title">Checklist Tugas</div><div class="card-badge">Hari ini</div></div>
+        <div class="check-list">
+          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Restock & cek stok — PLN ICON+</div><div class="check-machine">Chinos Panam</div></div>
+          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Restock & cek stok — Kopi Tiam</div><div class="check-machine">Thamrin Kopitiam</div></div>
+          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Restock & cek stok — Chinos Gobah</div><div class="check-machine">Chinos Gobah</div></div>
+          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Restock & cek stok — Bhadrika</div><div class="check-machine">Bhadrika</div></div>
+          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Restock & cek stok — LOY-D12</div><div class="check-machine">D12</div></div>
+        </div>
       </div>
     </div>
 
-    <!-- ===== TECH: STATUS ===== -->
+    <!-- TECH ROUTE -->
+    <div class="panel" id="page-tech-route">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Rute Servis Hari Ini</div><div class="card-badge">5 stop · Pekanbaru</div></div>
+        <div class="route-card"><div class="route-num">1</div><div class="route-info"><div class="route-name">PLN ICON+ · 866902936100001</div><div class="route-meta">Chinos Panam · Restock rutin</div></div><div class="route-status c-amber">Menunggu</div></div>
+        <div class="route-card"><div class="route-num">2</div><div class="route-info"><div class="route-name">Kopi Tiam · 866902936100002</div><div class="route-meta">Thamrin Kopitiam · Restock rutin</div></div><div class="route-status c-amber">Menunggu</div></div>
+        <div class="route-card"><div class="route-num">3</div><div class="route-info"><div class="route-name">Chinos Gobah · 866902936200001</div><div class="route-meta">Chinos Gobah · Restock rutin</div></div><div class="route-status c-amber">Menunggu</div></div>
+        <div class="route-card"><div class="route-num">4</div><div class="route-info"><div class="route-name">Bhadrika · 866902936200002</div><div class="route-meta">Bhadrika · Restock rutin</div></div><div class="route-status c-amber">Menunggu</div></div>
+        <div class="route-card"><div class="route-num">5</div><div class="route-info"><div class="route-name">LOY-D12 · 866902936300001</div><div class="route-meta">D12 · Restock rutin</div></div><div class="route-status c-amber">Menunggu</div></div>
+      </div>
+    </div>
+
+    <!-- TECH STATUS -->
     <div class="panel" id="page-tech-status">
-      <div class="grid-3b">
-        <div class="card"><div class="card-header"><div><div class="card-title">LBX-001 · Brew</div><div class="card-sub">Sinar Mas Lt.3</div></div><span style="color:var(--green);font-weight:700;font-size:12px">● Online</span></div>
-          <div class="ring-row"><div class="ring-wrap"><svg width="70" height="70"><circle cx="35" cy="35" r="28" fill="none" stroke="var(--bg3)" stroke-width="6"/><circle cx="35" cy="35" r="28" fill="none" stroke="var(--green)" stroke-width="6" stroke-dasharray="176" stroke-dashoffset="23" stroke-linecap="round"/></svg><div class="ring-center"><div class="ring-val" style="color:var(--green)">87%</div><div class="ring-lbl">STOK</div></div></div><div><div style="font-size:12px;color:var(--text2);margin-bottom:4px">Suhu: <b style="color:var(--text)">68°C</b></div><div style="font-size:12px;color:var(--text2);margin-bottom:4px">Uptime: <b style="color:var(--text)">99.2%</b></div><div style="font-size:12px;color:var(--text2)">Error: <b style="color:var(--green)">0</b></div></div></div></div>
-        <div class="card"><div class="card-header"><div><div class="card-title">LBX-002 · Munch</div><div class="card-sub">GoWork Sudirman</div></div><span style="color:var(--green);font-weight:700;font-size:12px">● Online</span></div>
-          <div class="ring-row"><div class="ring-wrap"><svg width="70" height="70"><circle cx="35" cy="35" r="28" fill="none" stroke="var(--bg3)" stroke-width="6"/><circle cx="35" cy="35" r="28" fill="none" stroke="var(--amber)" stroke-width="6" stroke-dasharray="176" stroke-dashoffset="45" stroke-linecap="round"/></svg><div class="ring-center"><div class="ring-val" style="color:var(--amber)">74%</div><div class="ring-lbl">STOK</div></div></div><div><div style="font-size:12px;color:var(--text2);margin-bottom:4px">Suhu: <b style="color:var(--text)">N/A</b></div><div style="font-size:12px;color:var(--text2);margin-bottom:4px">Uptime: <b style="color:var(--text)">98.7%</b></div><div style="font-size:12px;color:var(--text2)">Error: <b style="color:var(--amber)">1</b></div></div></div></div>
-        <div class="card"><div class="card-header"><div><div class="card-title">LBX-005 · Brew</div><div class="card-sub">Taman Anggrek</div></div><span style="color:var(--red);font-weight:700;font-size:12px">● Offline</span></div>
-          <div class="ring-row"><div class="ring-wrap"><svg width="70" height="70"><circle cx="35" cy="35" r="28" fill="none" stroke="var(--bg3)" stroke-width="6"/><circle cx="35" cy="35" r="28" fill="none" stroke="var(--red)" stroke-width="6" stroke-dasharray="176" stroke-dashoffset="176" stroke-linecap="round"/></svg><div class="ring-center"><div class="ring-val" style="color:var(--red)">—</div><div class="ring-lbl">OFFLINE</div></div></div><div><div style="font-size:12px;color:var(--text2);margin-bottom:4px">Last seen: <b style="color:var(--red)">47m ago</b></div><div style="font-size:12px;color:var(--text2);margin-bottom:4px">Error code: <b style="color:var(--red)">E-09</b></div><div style="font-size:12px;color:var(--text2)">Net: <b style="color:var(--red)">Timeout</b></div></div></div></div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Status Real-time Mesin</div><div class="card-badge" id="techStatusBadge">Loading...</div></div>
+        <div id="techStatusGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+          <div style="text-align:center;padding:20px;color:var(--text2);grid-column:1/-1">🔄 Loading data dari Reyeah API...</div>
+        </div>
       </div>
     </div>
 
-    <!-- ===== TECH: REFILL ===== -->
+    <!-- TECH REFILL -->
     <div class="panel" id="page-tech-refill">
       <div class="card">
         <div class="card-header"><div class="card-title">📥 Form Isi Ulang Stok</div><div class="card-badge">Input manual</div></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div>
             <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Pilih Mesin</div>
-            <select style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700">
-              <option>LBX-001 · Brew · Sinar Mas</option>
-              <option>LBX-002 · Munch · GoWork</option>
-              <option>LBX-003 · Care · Kampus UI</option>
+            <select id="refillSelect" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700">
+              <option value="866902936100001">PLN ICON+ · Chinos Panam</option>
+              <option value="866902936100002">Kopi Tiam · Thamrin Kopitiam</option>
+              <option value="866902936200001">Chinos Gobah</option>
+              <option value="866902936200002">Bhadrika</option>
+              <option value="866902936300001">LOY-D12 · D12</option>
             </select>
           </div>
           <div>
             <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Tanggal & Waktu</div>
-            <input type="datetime-local" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px" value="2025-05-08T09:41">
+            <input type="datetime-local" id="refillDate" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px">
           </div>
         </div>
         <div style="margin-top:16px">
-          <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px">Jumlah Isi Ulang per Produk</div>
-          <table class="tx-table">
-            <thead><tr><th>Produk</th><th>Stok Saat Ini</th><th>Ditambah</th><th>Total Setelah</th></tr></thead>
-            <tbody>
-              <tr><td>🧋 Matcha Latte</td><td style="color:var(--amber);font-weight:800">28</td><td><input type="number" value="72" style="width:60px;padding:4px 8px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-family:'Nunito',sans-serif;font-weight:800;text-align:center"></td><td style="color:var(--green);font-weight:800">100</td></tr>
-              <tr><td>🍫 Choco Drink</td><td style="color:var(--red);font-weight:800">11</td><td><input type="number" value="89" style="width:60px;padding:4px 8px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-family:'Nunito',sans-serif;font-weight:800;text-align:center"></td><td style="color:var(--green);font-weight:800">100</td></tr>
-              <tr><td>☕ Espresso</td><td style="color:var(--green);font-weight:800">84</td><td><input type="number" value="0" style="width:60px;padding:4px 8px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-family:'Nunito',sans-serif;font-weight:800;text-align:center"></td><td style="color:var(--text2);font-weight:800">84</td></tr>
-            </tbody>
-          </table>
+          <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px">Catatan Restock</div>
+          <textarea rows="3" style="width:100%;padding:10px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;resize:none" placeholder="Contoh: Restock semua slot, kondisi mesin normal."></textarea>
         </div>
         <div style="margin-top:16px;display:flex;gap:10px">
           <button style="padding:10px 24px;background:var(--blue);color:white;border:none;border-radius:var(--radius-sm);font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;cursor:pointer">✅ Simpan Restock</button>
@@ -782,18 +409,33 @@ body { background:var(--bg); color:var(--text); font-family:'Nunito',sans-serif;
       </div>
     </div>
 
-    <!-- ===== TECH: REPORT ===== -->
+    <!-- TECH REPORT -->
     <div class="panel" id="page-tech-report">
       <div class="card">
         <div class="card-header"><div class="card-title">📝 Laporan Kunjungan</div><div class="card-badge">Input setelah servis</div></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-          <div><div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Mesin</div><select style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700"><option>LBX-005 · Brew · Taman Anggrek</option><option>LBX-001</option><option>LBX-002</option></select></div>
-          <div><div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Jenis Kunjungan</div><select style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700"><option>Perbaikan darurat</option><option>Restock rutin</option><option>Maintenance berkala</option></select></div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Mesin</div>
+            <select style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700">
+              <option>PLN ICON+ · Chinos Panam</option>
+              <option>Kopi Tiam · Thamrin Kopitiam</option>
+              <option>Chinos Gobah</option>
+              <option>Bhadrika</option>
+              <option>LOY-D12 · D12</option>
+            </select>
+          </div>
+          <div><div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Jenis Kunjungan</div>
+            <select style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700">
+              <option>Restock rutin</option><option>Perbaikan darurat</option><option>Maintenance berkala</option>
+            </select>
+          </div>
         </div>
-        <div style="margin-bottom:14px"><div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Temuan & Tindakan</div><textarea rows="4" style="width:100%;padding:10px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;resize:none" placeholder="Contoh: Kabel power longgar. Sudah dipasang ulang dan ditest. Mesin kembali online."></textarea></div>
-        <div style="margin-bottom:16px"><div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Status Setelah Kunjungan</div>
-          <div style="display:flex;gap:8px">
-            <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--green-dim);border:1px solid var(--green);border-radius:var(--radius-sm);cursor:pointer;font-size:13px;font-weight:700;color:var(--green)"><input type="radio" name="status" checked> ✅ Selesai & Online</label>
+        <div style="margin-bottom:14px"><div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Temuan & Tindakan</div>
+          <textarea rows="4" style="width:100%;padding:10px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;resize:none" placeholder="Contoh: Semua slot sudah diisi ulang. Kondisi mesin normal."></textarea>
+        </div>
+        <div style="margin-bottom:16px">
+          <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Status Setelah Kunjungan</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--green-dim);border:1px solid var(--green);border-radius:var(--radius-sm);cursor:pointer;font-size:13px;font-weight:700;color:var(--green)"><input type="radio" name="status" checked> ✅ Selesai & Normal</label>
             <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--amber-dim);border:1px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;font-size:13px;font-weight:700;color:var(--text2)"><input type="radio" name="status"> ⚠ Perlu tindak lanjut</label>
             <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--red-dim);border:1px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;font-size:13px;font-weight:700;color:var(--text2)"><input type="radio" name="status"> 🔴 Masih bermasalah</label>
           </div>
@@ -802,10 +444,196 @@ body { background:var(--bg); color:var(--text); font-family:'Nunito',sans-serif;
       </div>
     </div>
 
-  </div><!-- end content -->
-</div><!-- end main -->
+  </div>
+</div>
 
 <script>
+// =============================================
+// REYEAH API CONFIG (TEST ENVIRONMENT)
+// Ganti dengan production credentials saat sudah dapat dari Reyeah
+// =============================================
+const REYEAH = {
+  baseUrl: 'https://test.wm.chuanyisoft.com',
+  appId: 'b27c426f-f579-4c1d-9d0d-ecd004edcb59',
+  appSecret: '5462DB0B462D66424AA89726CBC0CF7E',
+  get authHeader() { return 'Basic ' + btoa(this.appId + ':' + this.appSecret); }
+};
+
+// REAL MACHINE DATA
+const MACHINES = [
+  { machineNo:'866902936100001', name:'PLN ICON+',    group:'Chinos Panam',     emoji:'🍿', type:'Vending' },
+  { machineNo:'866902936100002', name:'Kopi Tiam',    group:'Thamrin Kopitiam', emoji:'🍿', type:'Vending' },
+  { machineNo:'866902936200001', name:'Chinos Gobah', group:'Chinos Gobah',     emoji:'🍿', type:'Vending' },
+  { machineNo:'866902936200002', name:'Bhadrika',     group:'Bhadrika',         emoji:'🍿', type:'Vending' },
+  { machineNo:'866902936300001', name:'LOY-D12',      group:'D12',              emoji:'🍿', type:'Vending' },
+];
+
+// Fetch products for a machine
+async function fetchMachineProducts(machineNo) {
+  try {
+    const res = await fetch(REYEAH.baseUrl + '/openInterface/lineProduct/getByPage', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'Authorization':REYEAH.authHeader },
+      body: JSON.stringify({ machineNo, currentPage:1, pageSize:50 })
+    });
+    const data = await res.json();
+    return data.code === 0 ? data.data : null;
+  } catch(e) { console.warn('API error:', machineNo, e.message); return null; }
+}
+
+function calcStockPct(records) {
+  if (!records || !records.length) return null;
+  const total = records.reduce((s,r) => s + (r.nowStock||0), 0);
+  return Math.min(100, Math.round((total / (records.length * 10)) * 100));
+}
+
+function renderMachineList(machines, apiResults) {
+  const el = document.getElementById('machineListOverview');
+  if (!el) return;
+  el.innerHTML = machines.map((m,i) => {
+    const data = apiResults[i];
+    const hasData = data && data.records && data.records.length > 0;
+    const pct = calcStockPct(data?.records);
+    const isLow = pct !== null && pct < 30;
+    const sc = !hasData ? 's-warn' : isLow ? 's-warn' : 's-online';
+    const st = !hasData ? '<span class="c-amber">Cek Koneksi</span>' : isLow ? '<span class="c-amber">Stok Low</span>' : '<span class="c-green">Online</span>';
+    return `<div class="machine-row ${i===0?'selected':''}" onclick="showMachineStock('${m.machineNo}','${m.name}',${i})">
+      <div class="machine-emoji">${m.emoji}</div>
+      <div class="machine-info"><div class="machine-name">${m.machineNo} · ${m.name}</div><div class="machine-loc">${m.group}</div></div>
+      <div class="machine-status"><div class="status-dot ${sc}"></div>${st}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderMachinesTable(machines, apiResults) {
+  const tbody = document.getElementById('machineTableBody');
+  if (!tbody) return;
+  let totalProds = 0;
+  tbody.innerHTML = machines.map((m,i) => {
+    const data = apiResults[i];
+    const records = data?.records || [];
+    totalProds += records.length;
+    const hasData = records.length > 0;
+    const pct = calcStockPct(records);
+    const stockStr = pct !== null ? `<span style="color:${pct<30?'var(--red)':pct<60?'var(--amber)':'var(--green)'};font-weight:800">${pct}%</span>` : '<span style="color:var(--text2)">—</span>';
+    const apiSt = hasData ? `<span style="color:var(--green);font-weight:700">✅ ${records.length} produk</span>` : `<span style="color:var(--amber);font-weight:700">⚠ No data</span>`;
+    return `<tr><td style="font-weight:800;font-size:11px">${m.machineNo}</td><td style="font-weight:800">${m.name}</td><td style="color:var(--text2)">${m.group}</td><td><span class="tx-pill pill-snack">${m.type}</span></td><td>${stockStr}</td><td>${apiSt}</td></tr>`;
+  }).join('');
+  const sp = document.getElementById('statTotalProducts');
+  const sp2 = document.getElementById('statTotalProducts2');
+  if (sp) sp.textContent = totalProds || '—';
+  if (sp2) sp2.textContent = totalProds || '—';
+}
+
+function renderTechStatus(machines, apiResults) {
+  const grid = document.getElementById('techStatusGrid');
+  const badge = document.getElementById('techStatusBadge');
+  if (!grid) return;
+  let online = 0;
+  grid.innerHTML = machines.map((m,i) => {
+    const data = apiResults[i];
+    const records = data?.records || [];
+    const hasData = records.length > 0;
+    if (hasData) online++;
+    const pct = calcStockPct(records);
+    const dashoffset = pct !== null ? 176 - (176 * pct / 100) : 176;
+    const color = pct === null ? 'var(--amber)' : pct < 30 ? 'var(--red)' : pct < 60 ? 'var(--amber)' : 'var(--green)';
+    return `<div class="card"><div class="card-header"><div><div class="card-title">${m.name}</div><div class="card-sub">${m.group}</div></div><span style="color:${hasData?'var(--green)':'var(--amber)'};font-weight:700;font-size:12px">${hasData?'● Online':'⚠ Cek'}</span></div>
+      <div class="ring-row"><div class="ring-wrap"><svg width="70" height="70"><circle cx="35" cy="35" r="28" fill="none" stroke="var(--bg3)" stroke-width="6"/><circle cx="35" cy="35" r="28" fill="none" stroke="${color}" stroke-width="6" stroke-dasharray="176" stroke-dashoffset="${dashoffset}" stroke-linecap="round"/></svg><div class="ring-center"><div class="ring-val" style="color:${color}">${pct !== null ? pct+'%' : '?'}</div><div class="ring-lbl">STOK</div></div></div>
+      <div><div style="font-size:12px;color:var(--text2);margin-bottom:4px">Produk: <b style="color:var(--text)">${records.length}</b></div><div style="font-size:11px;color:var(--text3)">${m.machineNo}</div></div></div></div>`;
+  }).join('');
+  if (badge) badge.textContent = `${online}/${machines.length} online`;
+}
+
+function renderAlerts(machines, apiResults) {
+  const list = document.getElementById('alertList');
+  if (!list) return;
+  const alerts = [];
+  let critCount = 0, warnCount = 0;
+  machines.forEach((m,i) => {
+    const data = apiResults[i];
+    const records = data?.records || [];
+    const pct = calcStockPct(records);
+    if (!data || !records.length) {
+      warnCount++;
+      alerts.push(`<div class="alert-item alert-amber"><div class="alert-icon">⚠️</div><div><div class="alert-title">Data tidak tersedia — ${m.name}</div><div class="alert-desc">Mesin ${m.machineNo} · ${m.group} tidak mengembalikan data dari test API.</div><div class="alert-time">Sekarang</div></div></div>`);
+    } else if (pct !== null && pct < 30) {
+      critCount++;
+      alerts.push(`<div class="alert-item alert-red"><div class="alert-icon">🔴</div><div><div class="alert-title">Stok Kritis — ${m.name}</div><div class="alert-desc">Stok tersisa ${pct}%. Segera lakukan restock di ${m.group}.</div><div class="alert-time">Sekarang · ${records.length} produk terdaftar</div></div></div>`);
+    }
+  });
+  if (!alerts.length) {
+    alerts.push(`<div class="alert-item alert-blue"><div class="alert-icon">✅</div><div><div class="alert-title">Semua mesin normal</div><div class="alert-desc">5 mesin Reyeah terpantau. Data dari test environment.</div><div class="alert-time">Sekarang</div></div></div>`);
+  }
+  alerts.push(`<div class="alert-item alert-blue"><div class="alert-icon">💙</div><div><div class="alert-title">Terhubung ke Reyeah Test API</div><div class="alert-desc">Menggunakan test environment. Production credentials belum diterima.</div><div class="alert-time">Info</div></div></div>`);
+  list.innerHTML = alerts.join('');
+  const ac = document.getElementById('alertCritical');
+  const aw = document.getElementById('alertWarning');
+  if (ac) ac.textContent = critCount;
+  if (aw) aw.textContent = warnCount;
+}
+
+let globalApiResults = [];
+
+async function showMachineStock(machineNo, name, idx) {
+  showPage('stock', document.querySelector('#nav-owner .nav-item:nth-child(5)'));
+  const title = document.getElementById('stockCardTitle');
+  const content = document.getElementById('stockDetailContent');
+  if (title) title.textContent = `🍿 ${name} — ${machineNo}`;
+  if (content) content.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text2)">🔄 Loading...</div>';
+
+  const data = globalApiResults[idx] || await fetchMachineProducts(machineNo);
+  if (!data || !data.records || !data.records.length) {
+    if (content) content.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text2)">⚠ Tidak ada data produk untuk mesin ini di test environment.</div>';
+    return;
+  }
+  const records = data.records;
+  let lowCount = 0, goodCount = 0, topStock = records[0];
+  records.forEach(r => {
+    if (r.nowStock <= 2) lowCount++;
+    else goodCount++;
+    if (r.nowStock > topStock.nowStock) topStock = r;
+  });
+  const ss = document.getElementById('statStockTotal');
+  const sl = document.getElementById('statLowStock');
+  const sg = document.getElementById('statGoodStock');
+  const st = document.getElementById('statTopStock');
+  if (ss) ss.textContent = records.length;
+  if (sl) sl.textContent = lowCount;
+  if (sg) sg.textContent = goodCount;
+  if (st) st.textContent = topStock.productName;
+
+  if (content) content.innerHTML = records.map(r => {
+    const pct = Math.min(100, (r.nowStock / 10) * 100);
+    const cls = pct < 30 ? 'bar-red' : pct < 60 ? 'bar-amber' : 'bar-green';
+    const ccls = pct < 30 ? 'c-red' : pct < 60 ? 'c-amber' : 'c-green';
+    return `<div class="stock-item">
+      <div class="stock-row"><div class="stock-name">Slot ${r.lineNum} · ${r.productName}</div><div class="stock-count ${ccls}">${r.nowStock} unit · Rp${(r.retailPrice*1000).toLocaleString()}</div></div>
+      <div class="stock-bar-bg"><div class="stock-bar ${cls}" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+async function initDashboard() {
+  const apiResults = await Promise.all(MACHINES.map(m => fetchMachineProducts(m.machineNo)));
+  globalApiResults = apiResults;
+
+  renderMachineList(MACHINES, apiResults);
+  renderMachinesTable(MACHINES, apiResults);
+  renderTechStatus(MACHINES, apiResults);
+  renderAlerts(MACHINES, apiResults);
+
+  const online = apiResults.filter(r => r && r.records && r.records.length).length;
+  const sm = document.getElementById('statMachineOnline');
+  if (sm) sm.innerHTML = `${online}<span style="font-size:16px;color:var(--text2)">/${MACHINES.length}</span>`;
+
+  const apiSt = document.getElementById('apiStatus');
+  if (apiSt) apiSt.textContent = online > 0 ? '✅' : '⚠️';
+
+  const tb = document.getElementById('topbar-machines');
+  if (tb) tb.textContent = `🤖 ${MACHINES.length} Mesin`;
+}
+
 // ROLE SWITCH
 function setRole(role, btn) {
   document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
@@ -813,14 +641,10 @@ function setRole(role, btn) {
   const isOwner = role === 'owner';
   document.getElementById('nav-owner').style.display = isOwner ? '' : 'none';
   document.getElementById('nav-tech').style.display = isOwner ? 'none' : '';
-  document.getElementById('user-name').textContent = isOwner ? 'Rizky K.' : 'Andi S.';
+  document.getElementById('user-name').textContent = isOwner ? 'Owner LoyaBox' : 'Teknisi LoyaBox';
   document.getElementById('user-role-label').textContent = isOwner ? 'Owner · Admin' : 'Teknisi Lapangan';
-  document.getElementById('user-avatar').textContent = isOwner ? 'RK' : 'AS';
-  if (isOwner) {
-    showPage('overview', document.querySelector('#nav-owner .nav-item'));
-  } else {
-    showPage('tech-home', document.querySelector('#nav-tech .nav-item'));
-  }
+  document.getElementById('user-avatar').textContent = isOwner ? 'LB' : 'TK';
+  showPage(isOwner ? 'overview' : 'tech-home', document.querySelector(isOwner ? '#nav-owner .nav-item' : '#nav-tech .nav-item'));
 }
 
 // PAGE SWITCH
@@ -830,82 +654,54 @@ function showPage(id, navItem) {
   if (target) target.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   if (navItem) navItem.classList.add('active');
-  const titles = {
-    'overview':'Dashboard Overview', 'revenue':'Revenue & Analytics',
-    'machines':'Semua Mesin', 'stock':'Stok & Produk',
-    'transactions':'Histori Transaksi', 'alerts':'Alerts & Notifikasi',
-    'tech-home':'Checklist Tugas', 'tech-route':'Rute Servis',
-    'tech-status':'Status Real-time', 'tech-refill':'Isi Ulang Stok',
-    'tech-report':'Laporan Kunjungan'
-  };
+  const titles = { 'overview':'Dashboard Overview','revenue':'Revenue & Analytics','machines':'Semua Mesin','stock':'Stok & Produk','transactions':'Histori Transaksi','alerts':'Alerts','tech-home':'Checklist Tugas','tech-route':'Rute Servis','tech-status':'Status Real-time','tech-refill':'Isi Ulang Stok','tech-report':'Laporan Kunjungan' };
   document.getElementById('page-title').textContent = titles[id] || id;
 }
 
-// CHECKLIST TOGGLE
 function toggleCheck(item) {
   const box = item.querySelector('.check-box');
   const text = item.querySelector('.check-text');
-  if (box.classList.contains('done')) {
-    box.classList.remove('done'); box.textContent = '';
-    text.classList.remove('done-text');
-  } else {
-    box.classList.add('done'); box.textContent = '✓';
-    text.classList.add('done-text');
-  }
+  if (box.classList.contains('done')) { box.classList.remove('done'); box.textContent = ''; text.classList.remove('done-text'); }
+  else { box.classList.add('done'); box.textContent = '✓'; text.classList.add('done-text'); }
 }
+
+// Live clock
+setInterval(() => {
+  const el = document.getElementById('live-time');
+  if (el) el.textContent = new Date().toLocaleTimeString('id-ID');
+}, 1000);
+
+// Set datetime default
+const rd = document.getElementById('refillDate');
+if (rd) rd.value = new Date().toISOString().slice(0,16);
 
 // CHARTS
 window.addEventListener('load', () => {
-  const grid = { color: 'rgba(255,255,255,0.05)' };
-  const tick = { color: '#5E5F70', font: { family: 'Nunito', size: 11, weight: '700' } };
-  const tooltip = { backgroundColor: '#1E2028', titleColor: '#F0F0F0', bodyColor: '#9A9BAD', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, padding: 10 };
+  initDashboard();
 
-  // Revenue bar chart
+  const grid = { color:'rgba(255,255,255,0.05)' };
+  const tick = { color:'#5E5F70', font:{ family:'Nunito', size:11, weight:'700' } };
+  const tooltip = { backgroundColor:'#1E2028', titleColor:'#F0F0F0', bodyColor:'#9A9BAD', borderColor:'rgba(255,255,255,0.1)', borderWidth:1, padding:10 };
+
   const ctx1 = document.getElementById('chartRevenue');
   if (ctx1) new Chart(ctx1, {
-    type: 'bar',
-    data: {
-      labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
-      datasets: [{
-        label: 'Revenue (rb)',
-        data: [3200, 3800, 3500, 4280, 0, 0, 0],
-        backgroundColor: ctx1.getContext('2d').createLinearGradient ? (() => {
-          const g = ctx1.getContext('2d').createLinearGradient(0,0,0,200);
-          g.addColorStop(0,'rgba(37,99,235,0.8)'); g.addColorStop(1,'rgba(37,99,235,0.2)');
-          return g;
-        })() : 'rgba(37,99,235,0.6)',
-        borderRadius: 6, borderSkipped: false,
-      }, {
-        label: 'Target',
-        data: [3500,3500,3500,3500,3500,3500,3500],
-        type: 'line', borderColor: 'rgba(245,158,11,0.5)',
-        borderDash: [4,4], borderWidth: 1.5, pointRadius: 0, fill: false,
-      }]
-    },
-    options: { responsive:true, plugins:{ legend:{display:false}, tooltip }, scales:{ x:{ grid, ticks:tick }, y:{ grid, ticks:{ ...tick, callback: v => 'Rp'+v/1000+'jt' } } } }
+    type:'bar',
+    data:{ labels:['Sen','Sel','Rab','Kam','Jum','Sab','Min'], datasets:[{ label:'Revenue', data:[3200,3800,3500,4280,0,0,0], backgroundColor:'rgba(37,99,235,0.6)', borderRadius:6, borderSkipped:false },{ label:'Target', data:[3500,3500,3500,3500,3500,3500,3500], type:'line', borderColor:'rgba(245,158,11,0.5)', borderDash:[4,4], borderWidth:1.5, pointRadius:0, fill:false }] },
+    options:{ responsive:true, plugins:{ legend:{display:false}, tooltip }, scales:{ x:{ grid, ticks:tick }, y:{ grid, ticks:{ ...tick, callback:v=>'Rp'+v/1000+'jt' } } } }
   });
 
-  // Doughnut
   const ctx2 = document.getElementById('chartDoughnut');
   if (ctx2) new Chart(ctx2, {
-    type: 'doughnut',
-    data: {
-      labels: ['Latte', 'Espresso', 'Matcha', 'Snack', 'Health'],
-      datasets: [{ data: [287,198,143,224,95], backgroundColor: ['#2563EB','#3B82F6','#8B5CF6','#F59E0B','#10B981'], borderWidth: 0, hoverOffset: 4 }]
-    },
-    options: { responsive:true, cutout:'70%', plugins:{ legend:{ position:'right', labels:{ color:'#9A9BAD', font:{ family:'Nunito', size:11, weight:'700' }, padding:8, boxWidth:10 } }, tooltip } }
+    type:'doughnut',
+    data:{ labels:['Snack','Minuman','Energy','Candy','Lainnya'], datasets:[{ data:[287,198,143,122,97], backgroundColor:['#F59E0B','#3B82F6','#10B981','#8B5CF6','#EF4444'], borderWidth:0 }] },
+    options:{ responsive:true, cutout:'70%', plugins:{ legend:{ position:'right', labels:{ color:'#9A9BAD', font:{ family:'Nunito', size:11, weight:'700' }, padding:8, boxWidth:10 } }, tooltip } }
   });
 
-  // Monthly line
   const ctx3 = document.getElementById('chartMonthly');
   if (ctx3) {
     const labels = Array.from({length:30}, (_,i) => i+1+'');
     const data = [2800,3100,2900,3400,3200,3600,3800,3500,4000,3700,3900,4200,3800,4100,3600,4300,4000,4500,4200,4600,4100,4400,3900,4200,4000,4300,3800,4280,0,0];
-    new Chart(ctx3, {
-      type:'line',
-      data:{ labels, datasets:[{ data, borderColor:'#2563EB', backgroundColor:'rgba(37,99,235,0.1)', borderWidth:2, fill:true, tension:0.4, pointRadius:0, pointHoverRadius:4 }] },
-      options:{ responsive:true, plugins:{ legend:{display:false}, tooltip }, scales:{ x:{ grid, ticks:{ ...tick, maxTicksLimit:8 } }, y:{ grid, ticks:{ ...tick, callback: v=>'Rp'+v/1000+'jt' } } } }
-    });
+    new Chart(ctx3, { type:'line', data:{ labels, datasets:[{ data, borderColor:'#2563EB', backgroundColor:'rgba(37,99,235,0.1)', borderWidth:2, fill:true, tension:0.4, pointRadius:0 }] }, options:{ responsive:true, plugins:{ legend:{display:false}, tooltip }, scales:{ x:{ grid, ticks:{ ...tick, maxTicksLimit:8 } }, y:{ grid, ticks:{ ...tick, callback:v=>'Rp'+v/1000+'jt' } } } } });
   }
 });
 </script>
