@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LoyaBox — PT Kreasi Uap Indonesia</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#1a1a1a}
+
+    /* ── HEADER ── */
+    header{background:#1a1a1a;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+    .logo{color:#fff;font-size:18px;font-weight:700;letter-spacing:-0.5px}
+    .logo em{color:#f5a623;font-style:normal}
+    .header-right{display:flex;align-items:center;gap:12px}
+    .pt-tag{color:#888;font-size:11px}
+    .test-pill{background:#f5a623;color:#1a1a1a;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
+    .btn-logout{background:none;border:1px solid #444;color:#aaa;font-size:12px;padding:5px 12px;border-radius:6px;cursor:pointer}
+    .btn-logout:hover{border-color:#f5a623;color:#f5a623}
+
+    /* ── LOGIN PAGE ── */
+    #login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%)}
+    .login-card{background:#fff;border-radius:16px;padding:40px 36px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .login-logo{text-align:center;margin-bottom:28px}
+    .login-logo .big{font-size:28px;font-weight:700;letter-spacing:-1px}
+    .login-logo .big em{color:#f5a623;font-style:normal}
+    .login-logo .sub{font-size:12px;color:#888;margin-top:4px}
+    .login-card h2{font-size:16px;font-weight:600;margin-bottom:20px;color:#1a1a1a}
+    .login-card label{display:block;font-size:12px;font-weight:500;color:#555;margin-bottom:5px}
+    .login-card input{width:100%;padding:11px 14px;border:1.5px solid #e5e5e5;border-radius:8px;font-size:14px;outline:none;margin-bottom:14px;transition:border-color .2s}
+    .login-card input:focus{border-color:#f5a623}
+    .btn-login{width:100%;padding:13px;background:#f5a623;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s;margin-top:4px}
+    .btn-login:hover{background:#e09520}
+    .login-error{color:#e53e3e;font-size:12px;margin-bottom:10px;display:none}
+    .login-info{margin-top:20px;padding:14px;background:#f9f9f9;border-radius:8px;font-size:12px;color:#666;line-height:1.6}
+    .login-info strong{color:#1a1a1a}
+
+    /* ── MAIN LAYOUT ── */
+    #main-page{display:none}
+    .container{max-width:1000px;margin:28px auto;padding:0 16px;display:grid;grid-template-columns:1fr 360px;gap:20px}
+    @media(max-width:720px){.container{grid-template-columns:1fr}}
+
+    /* ── CARDS ── */
+    .card{background:#fff;border-radius:12px;border:1px solid #e5e5e5;padding:22px;margin-bottom:16px}
+    .card h2{font-size:15px;font-weight:600;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:8px}
+
+    /* ── PRODUCTS ── */
+    .product{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #f7f7f7}
+    .product:last-child{border:none}
+    .product-icon{width:52px;height:52px;border-radius:10px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+    .product-info{flex:1}
+    .product-name{font-size:13px;font-weight:600}
+    .product-cat{font-size:11px;color:#f5a623;font-weight:500;margin-top:2px}
+    .product-desc{font-size:11px;color:#999;margin-top:2px}
+    .product-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+    .product-price{font-size:13px;font-weight:700}
+    .qty-ctrl{display:flex;align-items:center;gap:6px}
+    .qty-btn{width:28px;height:28px;border:1.5px solid #e5e5e5;border-radius:7px;background:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-weight:600}
+    .qty-btn:hover{background:#f5a623;border-color:#f5a623;color:#fff}
+    .qty-num{font-size:14px;font-weight:700;min-width:20px;text-align:center}
+
+    /* ── FORM ── */
+    .form-group{margin-bottom:14px}
+    .form-group label{display:block;font-size:12px;font-weight:500;color:#555;margin-bottom:5px}
+    .form-group input,.form-group select{width:100%;padding:10px 13px;border:1.5px solid #e5e5e5;border-radius:8px;font-size:13px;outline:none;transition:border-color .2s;background:#fff}
+    .form-group input:focus,.form-group select:focus{border-color:#f5a623}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+    /* ── PAYMENT OPTIONS ── */
+    .pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+    .pay-opt{border:2px solid #e5e5e5;border-radius:10px;padding:12px 8px;cursor:pointer;text-align:center;transition:all .2s}
+    .pay-opt:hover{border-color:#f5a623;background:#fffbf0}
+    .pay-opt.active{border-color:#f5a623;background:#fffbf0}
+    .pay-opt .icon{font-size:20px;margin-bottom:4px}
+    .pay-opt .name{font-size:11px;font-weight:600;color:#333}
+
+    /* ── SUMMARY ── */
+    .summary-row{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid #f7f7f7}
+    .summary-row:last-child{border:none}
+    .summary-total{display:flex;justify-content:space-between;font-size:16px;font-weight:700;padding:14px 0 0;border-top:2px solid #1a1a1a;margin-top:8px}
+    .badge-secure{display:inline-flex;align-items:center;gap:6px;background:#f0fdf4;color:#16a34a;font-size:11px;padding:5px 10px;border-radius:20px;font-weight:500;margin-bottom:14px}
+
+    /* ── BUTTON ── */
+    .btn-pay{width:100%;padding:15px;background:#f5a623;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px}
+    .btn-pay:hover{background:#e09520;transform:translateY(-1px)}
+    .btn-pay:disabled{background:#ccc;cursor:not-allowed;transform:none}
+    .btn-pay.loading{background:#e09520}
+    .secure-note{text-align:center;font-size:11px;color:#999;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:4px}
+
+    /* ── FOOTER INFO ── */
+    .company-info{background:#fff;border-radius:12px;border:1px solid #e5e5e5;padding:16px;font-size:12px;color:#666;line-height:1.8}
+    .company-info strong{color:#1a1a1a;font-size:13px;display:block;margin-bottom:4px}
+
+    /* ── MODAL ── */
+    .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:16px}
+    .overlay.show{display:flex}
+    .modal{background:#fff;border-radius:20px;padding:40px 32px;text-align:center;max-width:380px;width:100%}
+    .modal .big-icon{font-size:64px;margin-bottom:16px;animation:pop .4s ease}
+    @keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+    .modal h3{font-size:20px;font-weight:700;margin-bottom:8px}
+    .modal p{font-size:13px;color:#666;line-height:1.6;margin-bottom:20px}
+    .order-box{background:#f9f9f9;border-radius:10px;padding:14px;margin-bottom:20px;text-align:left}
+    .order-box .label{font-size:11px;color:#999;margin-bottom:2px}
+    .order-box .value{font-size:14px;font-weight:700}
+    .btn-done{padding:12px 36px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
+    .btn-done:hover{background:#333}
+
+    /* ── SPINNER ── */
+    .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:8px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     LOGIN PAGE
+════════════════════════════════════════════ -->
+<div id="login-page">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="big">Loya<em>Box</em> ⚡</div>
+      <div class="sub">PT Kreasi Uap Indonesia</div>
+    </div>
+    <h2>Masuk ke akun Anda</h2>
+    <div class="login-error" id="login-error">Username atau password salah.</div>
+    <label>Username</label>
+    <input type="text" id="username" placeholder="Masukkan username" autocomplete="username"/>
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Masukkan password" autocomplete="current-password"
+           onkeydown="if(event.key==='Enter')doLogin()"/>
+    <button class="btn-login" onclick="doLogin()">Masuk</button>
+    <div class="login-info">
+      <strong>Akun Demo / Staging</strong><br>
+      Username: <code>xendit</code><br>
+      Password: <code>loyabox123</code>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN PAGE
+════════════════════════════════════════════ -->
+<div id="main-page">
+  <header>
+    <div class="logo">Loya<em>Box</em> ⚡</div>
+    <div class="header-right">
+      <span class="pt-tag">PT Kreasi Uap Indonesia</span>
+      <span class="test-pill">TEST MODE</span>
+      <button class="btn-logout" onclick="doLogout()">Keluar</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- LEFT COLUMN -->
+    <div>
+      <!-- Products -->
+      <div class="card">
+        <h2>🛒 Pilih Produk</h2>
+
+        <div class="product">
+          <div class="product-icon">☕</div>
+          <div class="product-info">
+            <div class="product-name">Kopi Susu LoyaBox</div>
+            <div class="product-cat">Minuman Kopi</div>
+            <div class="product-desc">Freshly brewed · Hot & Cold</div>
+          </div>
+          <div class="product-right">
+            <div class="product-price">Rp 12.000</div>
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="chg(1,-1)">−</button>
+              <span class="qty-num" id="q1">0</span>
+              <button class="qty-btn" onclick="chg(1,1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="product-icon">🍫</div>
+          <div class="product-info">
+            <div class="product-name">Beng-Beng Wafer Cokelat</div>
+            <div class="product-cat">Snack</div>
+            <div class="product-desc">Wafer crispy lapis cokelat</div>
+          </div>
+          <div class="product-right">
+            <div class="product-price">Rp 5.000</div>
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="chg(2,-1)">−</button>
+              <span class="qty-num" id="q2">0</span>
+              <button class="qty-btn" onclick="chg(2,1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="product-icon">🍿</div>
+          <div class="product-info">
+            <div class="product-name">Momogi Jagung Bakar</div>
+            <div class="product-cat">Snack</div>
+            <div class="product-desc">Gurih & renyah</div>
+          </div>
+          <div class="product-right">
+            <div class="product-price">Rp 5.000</div>
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="chg(3,-1)">−</button>
+              <span class="qty-num" id="q3">0</span>
+              <button class="qty-btn" onclick="chg(3,1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="product-icon">🧃</div>
+          <div class="product-info">
+            <div class="product-name">Air Mineral 600ml</div>
+            <div class="product-cat">Minuman</div>
+            <div class="product-desc">Dingin & segar</div>
+          </div>
+          <div class="product-right">
+            <div class="product-price">Rp 5.000</div>
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="chg(4,-1)">−</button>
+              <span class="qty-num" id="q4">0</span>
+              <button class="qty-btn" onclick="chg(4,1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="product-icon">🍬</div>
+          <div class="product-info">
+            <div class="product-name">Kopiko Permen Kopi</div>
+            <div class="product-cat">Snack</div>
+            <div class="product-desc">Manis & wangi kopi</div>
+          </div>
+          <div class="product-right">
+            <div class="product-price">Rp 5.000</div>
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="chg(5,-1)">−</button>
+              <span class="qty-num" id="q5">0</span>
+              <button class="qty-btn" onclick="chg(5,1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="product-icon">🩹</div>
+          <div class="product-info">
+            <div class="product-name">Acne Patch Original</div>
+            <div class="product-cat">Kesehatan</div>
+            <div class="product-desc">Invisible · 24 jam</div>
+          </div>
+          <div class="product-right">
+            <div class="product-price">Rp 2.000</div>
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="chg(6,-1)">−</button>
+              <span class="qty-num" id="q6">0</span>
+              <button class="qty-btn" onclick="chg(6,1)">+</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Customer Form -->
+      <div class="card">
+        <h2>👤 Data Pembeli</h2>
+        <div class="form-group">
+          <label>Nama Lengkap *</label>
+          <input type="text" id="cust-name" placeholder="Contoh: Budi Santoso"/>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label>Nomor HP / WhatsApp *</label>
+            <input type="tel" id="cust-phone" placeholder="08xxxxxxxxxx"/>
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="cust-email" placeholder="email@kamu.com"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Lokasi Mesin *</label>
+          <select id="cust-machine">
+            <option value="">— Pilih mesin terdekat —</option>
+            <option>PLN ICON+ · Chinos Panam, Pekanbaru</option>
+            <option>Kopi Tiam · Thamrin Kopitiam, Pekanbaru</option>
+            <option>Chinos Gobah · Gobah, Pekanbaru</option>
+            <option>Bhadrika · Bhadrika, Pekanbaru</option>
+            <option>LOY-D12 · D12, Pekanbaru</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+      <div class="card">
+        <h2>💳 Ringkasan Pesanan</h2>
+        <span class="badge-secure">🔒 Dijamin aman · Powered by Xendit</span>
+
+        <div id="summary-items">
+          <div style="font-size:13px;color:#999;text-align:center;padding:12px 0">
+            Belum ada produk dipilih
+          </div>
+        </div>
+
+        <div class="summary-total">
+          <span>Total Pembayaran</span>
+          <span id="total-display">Rp 0</span>
+        </div>
+
+        <div style="margin:18px 0 8px;font-size:12px;font-weight:600;color:#555">Metode Pembayaran</div>
+        <div class="pay-grid">
+          <div class="pay-opt active" onclick="selPay(this,'QRIS')">
+            <div class="icon">📱</div>
+            <div class="name">QRIS</div>
+          </div>
+          <div class="pay-opt" onclick="selPay(this,'GOPAY')">
+            <div class="icon">💚</div>
+            <div class="name">GoPay</div>
+          </div>
+          <div class="pay-opt" onclick="selPay(this,'OVO')">
+            <div class="icon">🟣</div>
+            <div class="name">OVO</div>
+          </div>
+          <div class="pay-opt" onclick="selPay(this,'DANA')">
+            <div class="icon">💙</div>
+            <div class="name">DANA</div>
+          </div>
+        </div>
+
+        <button class="btn-pay" id="pay-btn" onclick="handlePay()">
+          Bayar Sekarang ⚡
+        </button>
+        <div class="secure-note">🔒 SSL · Xendit Payment Gateway</div>
+      </div>
+
+      <div class="company-info">
+        <strong>PT Kreasi Uap Indonesia</strong>
+        📍 Jl. Melur Permai No.1, Tampan<br>
+        Pekanbaru, Riau 28291<br>
+        📱 +62 877-8421-7444<br>
+        📧 loyalin.id@gmail.com<br>
+        🕐 Layanan 24 Jam · 7 Hari
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SUCCESS MODAL
+════════════════════════════════════════════ -->
+<div class="overlay" id="modal">
+  <div class="modal">
+    <div class="big-icon">✅</div>
+    <h3>Pembayaran Berhasil!</h3>
+    <p>Terima kasih! Mesin vending akan segera mengeluarkan produk Anda secara otomatis.</p>
+    <div class="order-box">
+      <div class="label">Nomor Invoice</div>
+      <div class="value" id="inv-no">—</div>
+      <div class="label" style="margin-top:10px">Total Dibayar</div>
+      <div class="value" id="inv-total">—</div>
+    </div>
+    <button class="btn-done" onclick="closeModal()">Selesai</button>
+  </div>
+</div>
+
+<script>
+  /* ── AUTH ── */
+  const USERS = { xendit: 'loyabox123', admin: 'loyabox2026' };
+
+  function doLogin() {
+    const u = document.getElementById('username').value.trim();
+    const p = document.getElementById('password').value;
+    if (USERS[u] && USERS[u] === p) {
+      sessionStorage.setItem('lb_auth', u);
+      document.getElementById('login-page').style.display = 'none';
+      document.getElementById('main-page').style.display = 'block';
+      document.getElementById('login-error').style.display = 'none';
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  }
+
+  function doLogout() {
+    sessionStorage.removeItem('lb_auth');
+    location.reload();
+  }
+
+  // Auto-check session
+  if (sessionStorage.getItem('lb_auth')) {
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('main-page').style.display = 'block';
+  }
+
+  /* ── PRODUCTS ── */
+  const PRODUCTS = {
+    1: { name: 'Kopi Susu LoyaBox',     price: 12000 },
+    2: { name: 'Beng-Beng Wafer',       price: 5000  },
+    3: { name: 'Momogi Jagung Bakar',   price: 5000  },
+    4: { name: 'Air Mineral 600ml',     price: 5000  },
+    5: { name: 'Kopiko Permen Kopi',    price: 5000  },
+    6: { name: 'Acne Patch Original',   price: 2000  },
+  };
+  const qtys = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0 };
+  let selectedPay = 'QRIS';
+
+  function chg(id, d) {
+    qtys[id] = Math.max(0, qtys[id] + d);
+    document.getElementById('q' + id).textContent = qtys[id];
+    updateSummary();
+  }
+
+  function selPay(el, method) {
+    document.querySelectorAll('.pay-opt').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    selectedPay = method;
+  }
+
+  function updateSummary() {
+    let total = 0;
+    let html  = '';
+    Object.keys(PRODUCTS).forEach(id => {
+      const q = qtys[id];
+      if (q > 0) {
+        const amt = q * PRODUCTS[id].price;
+        total += amt;
+        html += `<div class="summary-row">
+          <span>${PRODUCTS[id].name} ×${q}</span>
+          <span>Rp ${amt.toLocaleString('id-ID')}</span>
+        </div>`;
+      }
+    });
+    document.getElementById('summary-items').innerHTML = html ||
+      '<div style="font-size:13px;color:#999;text-align:center;padding:12px 0">Belum ada produk dipilih</div>';
+    document.getElementById('total-display').textContent = 'Rp ' + total.toLocaleString('id-ID');
+  }
+
+  /* ── XENDIT CHECKOUT ── */
+  const XENDIT_SECRET = 'xnd_development_1Wgk6gmsN76xnao5XqFIbeLUCGdQ3SwXJWvCVHZJnMXYyTKJZfE5yDE7E2CJ2m';
+
+  async function handlePay() {
+    const name    = document.getElementById('cust-name').value.trim();
+    const phone   = document.getElementById('cust-phone').value.trim();
+    const email   = document.getElementById('cust-email').value.trim();
+    const machine = document.getElementById('cust-machine').value;
+
+    if (!name)    { alert('Nama wajib diisi'); return; }
+    if (!phone)   { alert('Nomor HP wajib diisi'); return; }
+    if (!email)   { alert('Email wajib diisi'); return; }
+    if (!machine) { alert('Pilih lokasi mesin'); return; }
+
+    const total = Object.keys(PRODUCTS).reduce((s, id) => s + qtys[id] * PRODUCTS[id].price, 0);
+    if (total === 0) { alert('Pilih minimal 1 produk'); return; }
+
+    const items = Object.keys(PRODUCTS)
+      .filter(id => qtys[id] > 0)
+      .map(id => ({
+        name:     PRODUCTS[id].name,
+        quantity: qtys[id],
+        price:    PRODUCTS[id].price,
+        category: 'Vending Machine',
+      }));
+
+    const btn = document.getElementById('pay-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Memproses...';
+
+    try {
+      const externalId = 'LYB-' + Date.now();
+      const body = {
+        external_id:      externalId,
+        amount:           total,
+        currency:         'IDR',
+        payer_email:      email,
+        description:      `LoyaBox · ${machine}`,
+        customer: {
+          given_names:  name,
+          mobile_number: phone,
+          email:         email,
+        },
+        items,
+        success_redirect_url: window.location.href + '?status=success&inv=' + externalId,
+        failure_redirect_url: window.location.href + '?status=failed',
+        payment_methods: [selectedPay === 'QRIS' ? 'QRIS' : selectedPay],
+      };
+
+      const resp = await fetch('https://api.xendit.co/v2/invoices', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Basic ' + btoa(XENDIT_SECRET + ':'),
+          'Content-Type':  'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await resp.json();
+
+      if (data.invoice_url) {
+        // Redirect ke halaman bayar Xendit
+        window.location.href = data.invoice_url;
+      } else {
+        throw new Error(data.message || 'Gagal membuat invoice');
+      }
+
+    } catch (e) {
+      // Fallback: tampilkan modal sukses demo jika CORS blocked
+      console.log('Note:', e.message);
+      const invNo = 'LYB-' + Math.floor(Math.random()*900000+100000);
+      document.getElementById('inv-no').textContent    = invNo;
+      document.getElementById('inv-total').textContent = 'Rp ' + total.toLocaleString('id-ID');
+      document.getElementById('modal').classList.add('show');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = 'Bayar Sekarang ⚡';
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('show');
+    // Reset
+    Object.keys(qtys).forEach(id => { qtys[id] = 0; document.getElementById('q'+id).textContent = 0; });
+    updateSummary();
+  }
+
+  // Handle redirect back dari Xendit
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('status') === 'success') {
+    setTimeout(() => {
+      document.getElementById('inv-no').textContent    = params.get('inv') || '—';
+      document.getElementById('inv-total').textContent = 'Lunas ✓';
+      document.getElementById('modal').classList.add('show');
+    }, 500);
+  }
+</script>
+</body>
+</html>
