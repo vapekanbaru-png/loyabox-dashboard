@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPKNBR.COM — Product Photo Studio</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#C9A84C;--dk:#0A0A0F;--sf:#13131A;--cd:#1C1C26;--bd:#2A2A38;--tx:#E8E6F0;--mt:#6A6880;--rd:#E63946;--pu:#7B5EA7}
+html,body{height:100%}
+body{font-family:'Outfit',sans-serif;background:var(--dk);color:var(--tx);font-size:12px;min-height:100vh}
+.app{display:grid;grid-template-columns:220px 1fr 275px;min-height:100vh}
+.pnl{background:var(--sf);padding:13px;display:flex;flex-direction:column;gap:11px;overflow-y:auto}
+.pnl.L{border-right:1px solid var(--bd)}
+.pnl.R{border-left:1px solid var(--bd)}
+.hd{font-size:9px;font-weight:600;color:var(--mt);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
+.cb{background:var(--cd);border:1px solid var(--bd);border-radius:5px;padding:7px 4px;text-align:center;cursor:pointer;color:var(--mt);font-family:'Outfit',sans-serif;font-size:10px;transition:.15s;line-height:1.3}
+.cb .ic{font-size:15px;display:block;margin-bottom:2px}
+.cb:hover,.cb.on{border-color:var(--g);color:var(--g);background:#1A1810}
+.cb.on{box-shadow:0 0 0 1px var(--g)}
+.sr{margin-bottom:7px}
+.sl{display:flex;justify-content:space-between;font-size:10px;color:var(--mt);margin-bottom:2px}
+.sl span:last-child{color:var(--tx);font-weight:500}
+input[type=range]{width:100%;accent-color:var(--g)}
+.divider{height:1px;background:var(--bd)}
+select,input[type=text],textarea{width:100%;background:var(--cd);border:1px solid var(--bd);color:var(--tx);padding:7px 9px;border-radius:5px;font-family:'Outfit',sans-serif;font-size:11px;outline:none}
+select{cursor:pointer}
+select:focus,input[type=text]:focus,textarea:focus{border-color:var(--g)}
+input[type=text]::placeholder,textarea::placeholder{color:var(--mt)}
+textarea{resize:vertical;line-height:1.6}
+.tag{font-size:10px;padding:3px 7px;border-radius:20px;background:var(--cd);border:1px solid var(--bd);color:var(--mt);cursor:pointer;font-family:'Outfit',sans-serif;transition:.15s}
+.tag:hover,.tag.on{border-color:var(--pu);color:#B48EE8;background:#1A1428}
+.ba{padding:8px 10px;border-radius:6px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;cursor:pointer;border:none;transition:.15s;display:flex;align-items:center;gap:5px;justify-content:center;letter-spacing:.3px;width:100%}
+.bg-btn{background:var(--g);color:#0A0A0F}
+.bg-btn:hover{background:#D4B060}
+.bo{background:transparent;color:var(--mt);border:1px solid var(--bd)}
+.bo:hover{border-color:var(--g);color:var(--g)}
+.bai{background:#2A1F40;color:#B48EE8;border:1px solid #4A3580}
+.bai:hover{background:#3A2A58}
+.bv{background:#0A2010;color:#4ECC80;border:1px solid #1A5030}
+.bv:hover{background:#0F2A18}
+#fi{display:none}
+.brand-hd{text-align:center;padding-bottom:11px;border-bottom:1px solid var(--bd)}
+.bn{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:3px;color:var(--g)}
+.ap{display:inline-flex;align-items:center;gap:4px;background:#2A0608;border:1px solid var(--rd);color:#FF6B75;font-size:9px;font-weight:700;padding:3px 8px;border-radius:3px;letter-spacing:.5px;margin-top:5px}
+.ctr{display:flex;flex-direction:column;align-items:center;padding:14px;gap:10px;background:var(--dk)}
+.cf{position:relative;background:var(--cd);border:1px solid var(--bd);border-radius:8px;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cf canvas{display:block}
+.wbar{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.72);padding:5px 10px;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.wlogo{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:2px;color:var(--g)}
+.wwarn{font-size:8px;font-weight:700;color:#FF6B75;border:1px solid #FF6B75;padding:2px 5px;border-radius:2px;letter-spacing:.3px}
+.hov{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;pointer-events:none}
+.hov i{font-size:30px;color:var(--bd)}
+.hov p{font-size:11px;color:var(--mt);text-align:center;line-height:1.5}
+.lov{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(10,10,15,.88);display:none;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+.lov.sh{display:flex}
+.sp{width:26px;height:26px;border:2px solid var(--bd);border-top-color:var(--g);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lt{font-size:11px;color:var(--g);letter-spacing:1px}
+.mbar{display:flex;gap:3px;background:var(--sf);border:1px solid var(--bd);border-radius:6px;padding:3px}
+.mt{flex:1;padding:6px 2px;text-align:center;font-size:10px;font-weight:500;border-radius:4px;cursor:pointer;color:var(--mt);border:none;background:transparent;font-family:'Outfit',sans-serif;transition:.15s}
+.mt.on{background:var(--g);color:#0A0A0F}
+.tr{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.tp{border-radius:5px;cursor:pointer;border:1.5px solid var(--bd);background:var(--cd);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 3px;gap:3px;transition:.15s}
+.tp:hover,.tp.on{border-color:var(--g)}
+.tp .tf{border:1px solid var(--bd);border-radius:3px;background:#16161F;display:flex;align-items:center;justify-content:center}
+.tp span{font-size:9px;color:var(--mt);text-align:center;line-height:1.2}
+.tp.on span{color:var(--g)}
+.dlr{display:flex;gap:5px;width:100%}
+.s3{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;width:100%}
+.sc{background:var(--sf);border:1px solid var(--bd);border-radius:6px;padding:7px;text-align:center}
+.sv-val{font-size:12px;font-weight:600;color:var(--g)}
+.sl2{font-size:9px;color:var(--mt)}
+.warn-bx{background:#150708;border:1px solid #3D0A0E;border-radius:6px;padding:10px;text-align:center}
+.warn-bx strong{display:block;font-size:11px;color:#FF4D5A;margin-bottom:4px}
+.warn-bx p{font-size:9px;color:#FF6B75;line-height:1.6}
+.caption-out{background:var(--cd);border:1px solid var(--bd);border-radius:5px;padding:10px;font-size:11px;line-height:1.7;color:var(--tx);min-height:80px;white-space:pre-wrap;word-break:break-word}
+.caption-out.empty{color:var(--mt);font-style:italic}
+.auto-bg-row{display:flex;gap:4px;flex-wrap:wrap}
+.abg{width:28px;height:28px;border-radius:4px;cursor:pointer;border:2px solid transparent;transition:.15s;flex-shrink:0}
+.abg:hover,.abg.on{border-color:var(--g)}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- LEFT PANEL -->
+<div class="pnl L">
+  <div class="brand-hd">
+    <div class="bn">VPKNBR.COM</div>
+    <div style="font-size:9px;color:var(--mt);letter-spacing:2px">PRODUCT PHOTO STUDIO</div>
+    <div class="ap"><i class="ti ti-alert-triangle" style="font-size:10px" aria-hidden="true"></i> 21+ ADULTS ONLY</div>
+  </div>
+
+  <div>
+    <div class="hd">Photo Style</div>
+    <div class="g2">
+      <div class="cb on" onclick="setS(this,'cinematic')"><span class="ic">🎬</span>Cinematic</div>
+      <div class="cb" onclick="setS(this,'neon')"><span class="ic">🌆</span>Neon City</div>
+      <div class="cb" onclick="setS(this,'minimal')"><span class="ic">◼</span>Minimal</div>
+      <div class="cb" onclick="setS(this,'smoky')"><span class="ic">🌫</span>Smoky</div>
+      <div class="cb" onclick="setS(this,'luxury')"><span class="ic">✦</span>Luxury</div>
+      <div class="cb" onclick="setS(this,'street')"><span class="ic">🏙</span>Street</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="hd">Lighting</div>
+    <div class="g3">
+      <div class="cb on" onclick="setL(this,'studio')" style="font-size:9px"><span style="display:block;width:14px;height:14px;border-radius:50%;background:#E8E6F0;border:1px solid #555;margin:0 auto 3px"></span>Studio</div>
+      <div class="cb" onclick="setL(this,'golden')" style="font-size:9px"><span style="display:block;width:14px;height:14px;border-radius:50%;background:#C9A84C;margin:0 auto 3px"></span>Golden</div>
+      <div class="cb" onclick="setL(this,'blue')" style="font-size:9px"><span style="display:block;width:14px;height:14px;border-radius:50%;background:#3A7FD4;margin:0 auto 3px"></span>Blue</div>
+      <div class="cb" onclick="setL(this,'red')" style="font-size:9px"><span style="display:block;width:14px;height:14px;border-radius:50%;background:#E63946;margin:0 auto 3px"></span>Red</div>
+      <div class="cb" onclick="setL(this,'purple')" style="font-size:9px"><span style="display:block;width:14px;height:14px;border-radius:50%;background:#7B5EA7;margin:0 auto 3px"></span>Purple</div>
+      <div class="cb" onclick="setL(this,'dark')" style="font-size:9px"><span style="display:block;width:14px;height:14px;border-radius:50%;background:#222;border:1px solid #555;margin:0 auto 3px"></span>Dark</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="hd">Camera Angle</div>
+    <div class="g3">
+      <div class="cb" onclick="setA(this,'top')"><span class="ic" style="font-size:13px">⬆</span>Top Down</div>
+      <div class="cb on" onclick="setA(this,'front')"><span class="ic" style="font-size:13px">⬜</span>Front</div>
+      <div class="cb" onclick="setA(this,'angle45')"><span class="ic" style="font-size:13px">◳</span>45°</div>
+      <div class="cb" onclick="setA(this,'side')"><span class="ic" style="font-size:13px">▷</span>Side</div>
+      <div class="cb" onclick="setA(this,'low')"><span class="ic" style="font-size:13px">⬇</span>Low</div>
+      <div class="cb" onclick="setA(this,'tilt')"><span class="ic" style="font-size:13px">◈</span>Tilt</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="hd" style="margin-bottom:6px">Auto Background <span style="color:var(--g);font-size:9px">AUTO</span></div>
+    <div class="auto-bg-row" id="bg-swatches"></div>
+    <button class="ba bo" style="margin-top:6px;font-size:10px" onclick="autoBg()"><i class="ti ti-wand" aria-hidden="true"></i> Auto-match BG</button>
+  </div>
+
+  <div>
+    <div class="hd">Adjustments</div>
+    <div class="sr"><div class="sl"><span>Brightness</span><span id="bv">100</span></div><input type="range" id="bri" min="0" max="200" value="100" step="1" oninput="rd()"></div>
+    <div class="sr"><div class="sl"><span>Contrast</span><span id="cv">100</span></div><input type="range" id="con" min="0" max="200" value="100" step="1" oninput="rd()"></div>
+    <div class="sr"><div class="sl"><span>Saturation</span><span id="sv">100</span></div><input type="range" id="sat" min="0" max="200" value="100" step="1" oninput="rd()"></div>
+    <div class="sr"><div class="sl"><span>Vignette</span><span id="vv">40</span></div><input type="range" id="vig" min="0" max="100" value="40" step="1" oninput="rd()"></div>
+    <div class="sr"><div class="sl"><span>Scale</span><span id="scv">75</span>%</div><input type="range" id="scl" min="20" max="100" value="75" step="1" oninput="rd()"></div>
+  </div>
+</div>
+
+<!-- CENTER -->
+<div class="ctr">
+  <div class="mbar" style="width:100%;max-width:500px">
+    <button class="mt on" onclick="setM(this,'product')">📦 Product</button>
+    <button class="mt" onclick="setM(this,'lifestyle')">🌿 Lifestyle</button>
+    <button class="mt" onclick="setM(this,'banner')">📣 Banner</button>
+    <button class="mt" onclick="setM(this,'story')">📱 Story</button>
+    <button class="mt" onclick="setM(this,'feed')">🖼 Feed</button>
+  </div>
+
+  <div class="tr" style="width:100%;max-width:500px">
+    <div class="tp on" onclick="setT(this,'sq')" title="Feed 1:1"><div class="tf" style="width:30px;height:30px"><i class="ti ti-square" style="font-size:13px;color:#666" aria-hidden="true"></i></div><span>Feed 1:1</span></div>
+    <div class="tp" onclick="setT(this,'story')" title="Story 9:16"><div class="tf" style="width:20px;height:32px"><i class="ti ti-rectangle-vertical" style="font-size:12px;color:#666" aria-hidden="true"></i></div><span>Story 9:16</span></div>
+    <div class="tp" onclick="setT(this,'land')" title="Banner 16:9"><div class="tf" style="width:32px;height:20px"><i class="ti ti-rectangle" style="font-size:12px;color:#666" aria-hidden="true"></i></div><span>Banner 16:9</span></div>
+    <div class="tp" onclick="setT(this,'port')" title="Feed 4:5"><div class="tf" style="width:24px;height:30px"><i class="ti ti-rectangle-vertical" style="font-size:11px;color:#666" aria-hidden="true"></i></div><span>Feed 4:5</span></div>
+    <div class="tp" onclick="setT(this,'shop')" title="Marketplace"><div class="tf" style="width:30px;height:30px"><i class="ti ti-shopping-bag" style="font-size:13px;color:#666" aria-hidden="true"></i></div><span>Shop</span></div>
+    <div class="tp" onclick="setT(this,'tiktok')" title="TikTok"><div class="tf" style="width:20px;height:32px"><i class="ti ti-brand-tiktok" style="font-size:12px;color:#666" aria-hidden="true"></i></div><span>TikTok</span></div>
+    <div class="tp" onclick="setT(this,'wa')" title="WhatsApp"><div class="tf" style="width:30px;height:30px"><i class="ti ti-brand-whatsapp" style="font-size:13px;color:#666" aria-hidden="true"></i></div><span>WA Status</span></div>
+    <div class="tp" onclick="setT(this,'web')" title="Web Banner"><div class="tf" style="width:36px;height:16px"><i class="ti ti-browser" style="font-size:9px;color:#666" aria-hidden="true"></i></div><span>Web Ad</span></div>
+  </div>
+
+  <div class="cf" id="cf" onclick="document.getElementById('fi').click()">
+    <canvas id="mc"></canvas>
+    <div class="hov" id="hov"><i class="ti ti-photo-plus" aria-hidden="true"></i><p>Click to upload product photo<br><span style="font-size:9px">JPG · PNG · WEBP</span></p></div>
+    <div class="wbar" id="wb"><span class="wlogo" id="wl">VPKNBR.COM</span><span class="wwarn" id="ww">⚠ FOR ADULTS 21+ ONLY</span></div>
+    <div class="lov" id="lov"><div class="sp"></div><div class="lt" id="lt">Processing...</div></div>
+  </div>
+  <input type="file" id="fi" accept="image/*" onchange="loadImg(event)">
+
+  <div class="dlr" style="max-width:500px">
+    <button class="ba bo" style="flex:1" onclick="document.getElementById('fi').click()"><i class="ti ti-upload" aria-hidden="true"></i> Upload</button>
+    <button class="ba bo" style="flex:1" onclick="resetAll()"><i class="ti ti-refresh" aria-hidden="true"></i> Reset</button>
+    <button class="ba bg-btn" style="flex:1.5" onclick="dlImg()"><i class="ti ti-download" aria-hidden="true"></i> Download</button>
+  </div>
+
+  <div class="s3" style="max-width:500px">
+    <div class="sc"><div class="sv-val" id="s1">1:1</div><div class="sl2">Template</div></div>
+    <div class="sc"><div class="sv-val" id="s2">Front</div><div class="sl2">Angle</div></div>
+    <div class="sc"><div class="sv-val" id="s3">Product</div><div class="sl2">Mode</div></div>
+  </div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="pnl R">
+  <div>
+    <div class="hd">Product Name</div>
+    <input type="text" id="pname" placeholder="e.g. Banana Cream, Pod Kit Pro, Drip Tip...">
+  </div>
+
+  <div>
+    <div class="hd">Product Category</div>
+    <select id="pcat" onchange="onCatChange()">
+      <option value="eliquid">E-Liquid / Juice</option>
+      <option value="device">Vape Device / Mod</option>
+      <option value="pod">Pod System</option>
+      <option value="coil">Coil / Atomizer</option>
+      <option value="accessory">Accessory</option>
+      <option value="disposable">Disposable Vape</option>
+      <option value="saltnic">Salt Nicotine</option>
+      <option value="other">Other Product</option>
+    </select>
+  </div>
+
+  <div id="nic-row">
+    <div class="hd">Nicotine</div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap">
+      <button class="tag on" onclick="setNic(this,'Nic-Free')">0mg</button>
+      <button class="tag" onclick="setNic(this,'3mg')">3mg</button>
+      <button class="tag" onclick="setNic(this,'6mg')">6mg</button>
+      <button class="tag" onclick="setNic(this,'12mg')">12mg</button>
+      <button class="tag" onclick="setNic(this,'25mg Salt')">25mg</button>
+      <button class="tag" onclick="setNic(this,'50mg Salt Nic')">Salt</button>
+    </div>
+  </div>
+
+  <div>
+    <div class="hd">Extra Info (optional)</div>
+    <input type="text" id="ex1" placeholder="e.g. Smooth hit, creamy finish" style="margin-bottom:4px">
+    <input type="text" id="ex2" placeholder="e.g. 30ml, available all nic levels" style="margin-bottom:4px">
+    <input type="text" id="ex3" placeholder="e.g. Best for pod mod & MTL RDA">
+  </div>
+
+  <div class="divider"></div>
+
+  <div>
+    <div class="hd" style="margin-bottom:5px">Caption Language</div>
+    <div style="display:flex;gap:4px">
+      <button class="tag on" onclick="setLang(this,'en')" style="flex:1;text-align:center">English</button>
+      <button class="tag" onclick="setLang(this,'id')" style="flex:1;text-align:center">Indonesia</button>
+      <button class="tag" onclick="setLang(this,'both')" style="flex:1;text-align:center">Both</button>
+    </div>
+  </div>
+
+  <div>
+    <div class="hd" style="margin-bottom:5px">Caption Tone</div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap">
+      <button class="tag on" onclick="setTone(this,'premium')" style="flex:1;text-align:center">Premium</button>
+      <button class="tag" onclick="setTone(this,'hype')" style="flex:1;text-align:center">Hype</button>
+      <button class="tag" onclick="setTone(this,'minimal')" style="flex:1;text-align:center">Minimal</button>
+      <button class="tag" onclick="setTone(this,'info')" style="flex:1;text-align:center">Info</button>
+    </div>
+  </div>
+
+  <button class="ba bai" onclick="genCaption()"><i class="ti ti-sparkles" aria-hidden="true"></i> Generate Caption + Hashtags</button>
+
+  <div>
+    <div class="hd" style="margin-bottom:5px">Generated Caption</div>
+    <div class="caption-out empty" id="cap-out">Caption will appear here after you click Generate...</div>
+  </div>
+
+  <button class="ba bv" onclick="copyCaption()" id="copy-btn"><i class="ti ti-copy" aria-hidden="true"></i> Copy Full Caption</button>
+
+  <div class="divider"></div>
+
+  <div>
+    <div class="hd" style="margin-bottom:5px">Watermark</div>
+    <div style="display:flex;flex-direction:column;gap:5px">
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:11px;color:var(--mt)"><input type="checkbox" id="cb1" checked onchange="toggleWM()"> Show VPKNBR.COM</label>
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:11px;color:var(--mt)"><input type="checkbox" id="cb2" checked onchange="toggleWM()"> Show 21+ Warning</label>
+    </div>
+  </div>
+
+  <div>
+    <div class="hd" style="margin-bottom:4px">Export Format</div>
+    <div style="display:flex;gap:4px">
+      <button class="tag on" onclick="setFmt(this,'jpg')" style="flex:1;text-align:center">JPG</button>
+      <button class="tag" onclick="setFmt(this,'png')" style="flex:1;text-align:center">PNG</button>
+      <button class="tag" onclick="setFmt(this,'webp')" style="flex:1;text-align:center">WEBP</button>
+    </div>
+  </div>
+
+  <div class="warn-bx">
+    <strong>⚠ WARNING — ADULTS ONLY (21+)</strong>
+    <p>This product contains nicotine, which is an addictive substance. Not for sale to persons under the age of 21. Keep out of reach of children and pets.</p>
+  </div>
+</div>
+</div>
+
+<script>
+const mc=document.getElementById('mc'),ctx=mc.getContext('2d');
+let img=null,cS='cinematic',cL='studio',cA='front',cBg=0,cM='product',cT='sq',eFmt='jpg',nicLv='Nic-Free',captionLang='en',captionTone='premium';
+
+const BG_PALETTES=[
+  ['#1a0a2e','#0f061c','#2a1040','#120820'],
+  ['#0a1a1a','#061212','#0d2020','#082818'],
+  ['#1a0a0a','#120606','#201010','#280c0c'],
+  ['#1a1200','#120e00','#201800','#281400'],
+  ['#0a0a1a','#060610','#0d0d20','#080818'],
+  ['#0f0f0f','#080808','#151515','#111111'],
+  ['#0a1808','#060e05','#0f2010','#082010'],
+  ['#180a18','#100610','#201420','#180d20']
+];
+
+const TMPL={sq:{w:460,h:460,lbl:'1:1'},story:{w:259,h:460,lbl:'9:16'},land:{w:460,h:259,lbl:'16:9'},port:{w:368,h:460,lbl:'4:5'},shop:{w:460,h:460,lbl:'Shop'},tiktok:{w:259,h:460,lbl:'TikTok'},wa:{w:460,h:460,lbl:'WA'},web:{w:460,h:200,lbl:'Web'}};
+const ANGLE={top:{sx:.9,sy:.5,ox:0,oy:.15,rot:0},front:{sx:.9,sy:.9,ox:0,oy:0,rot:0},angle45:{sx:.78,sy:.78,ox:.05,oy:-.05,rot:-10},side:{sx:.55,sy:.85,ox:.2,oy:0,rot:0},low:{sx:.9,sy:.75,ox:0,oy:.08,rot:6},tilt:{sx:.85,sy:.85,ox:0,oy:0,rot:14}};
+
+function buildSwatches(){
+  const sw=document.getElementById('bg-swatches');
+  sw.innerHTML='';
+  BG_PALETTES.forEach((pal,i)=>{
+    const d=document.createElement('div');
+    d.className='abg'+(i===0?' on':'');
+    d.style.background=pal[0];
+    d.title='BG '+(i+1);
+    d.onclick=()=>{document.querySelectorAll('.abg').forEach(x=>x.classList.remove('on'));d.classList.add('on');cBg=i;rd()};
+    sw.appendChild(d);
+  });
+}
+
+function applyTmpl(){
+  const t=TMPL[cT];
+  const DPR=Math.min(window.devicePixelRatio||1,2);
+  mc.width=t.w*DPR;mc.height=t.h*DPR;
+  mc.style.width=t.w+'px';mc.style.height=t.h+'px';
+  const cf=document.getElementById('cf');
+  cf.style.width=t.w+'px';cf.style.height=t.h+'px';
+  document.getElementById('s1').textContent=t.lbl;
+  rd();
+}
+
+function rd(){
+  document.getElementById('bv').textContent=document.getElementById('bri').value;
+  document.getElementById('cv').textContent=document.getElementById('con').value;
+  document.getElementById('sv').textContent=document.getElementById('sat').value;
+  document.getElementById('vv').textContent=document.getElementById('vig').value;
+  document.getElementById('scv').textContent=document.getElementById('scl').value;
+  const W=mc.width,H=mc.height;
+  ctx.clearRect(0,0,W,H);
+  const pal=BG_PALETTES[cBg];
+  ctx.fillStyle=pal[0];ctx.fillRect(0,0,W,H);
+  drawBgStyle(W,H);
+  if(img)drawImg(W,H);
+  drawVignette(W,H);
+  mc.style.filter=`brightness(${document.getElementById('bri').value}%) contrast(${document.getElementById('con').value}%) saturate(${document.getElementById('sat').value}%)`;
+}
+
+function drawBgStyle(W,H){
+  const styles={
+    cinematic:()=>{ctx.fillStyle='rgba(20,0,40,.4)';ctx.fillRect(0,0,W,H)},
+    neon:()=>{ctx.fillStyle='rgba(0,0,20,.5)';ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(0,200,180,.06)';ctx.lineWidth=1;for(let i=0;i<W;i+=20){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke()}},
+    smoky:()=>{ctx.fillStyle='rgba(40,40,60,.3)';ctx.fillRect(0,0,W,H)},
+    luxury:()=>{ctx.fillStyle='rgba(15,10,0,.5)';ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(201,168,76,.1)';ctx.lineWidth=1;for(let i=0;i<W;i+=36){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke()}for(let i=0;i<H;i+=36){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(W,i);ctx.stroke()}},
+    minimal:()=>{ctx.fillStyle='rgba(0,0,0,.15)';ctx.fillRect(0,0,W,H)},
+    street:()=>{ctx.fillStyle='rgba(10,10,20,.5)';ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(230,57,70,.04)';for(let i=0;i<H;i+=4)ctx.fillRect(0,i,W,2)}
+  };
+  (styles[cS]||styles.cinematic)();
+}
+
+function drawImg(W,H){
+  const ang=ANGLE[cA]||ANGLE.front;
+  const sc=parseInt(document.getElementById('scl').value)/100;
+  const ir=img.width/img.height;
+  let dw,dh;
+  if(ir>(W/H)){dw=W*sc*ang.sx;dh=dw/ir;}else{dh=H*sc*ang.sy;dw=dh*ir;}
+  const dx=(W-dw)/2+W*ang.ox;
+  const dy=(H-dh)/2+H*ang.oy;
+  ctx.save();
+  ctx.translate(W/2,H/2);
+  ctx.rotate(ang.rot*Math.PI/180);
+  ctx.translate(-W/2,-H/2);
+  const lc={studio:'rgba(255,255,255,.15)',golden:'rgba(201,168,76,.35)',blue:'rgba(58,127,212,.35)',red:'rgba(230,57,70,.35)',purple:'rgba(123,94,167,.35)',dark:'rgba(0,0,0,0)'};
+  ctx.shadowColor=lc[cL]||'rgba(255,255,255,.1)';
+  ctx.shadowBlur=W*.06;
+  ctx.drawImage(img,dx,dy,dw,dh);
+  ctx.restore();
+}
+
+function drawVignette(W,H){
+  const v=parseInt(document.getElementById('vig').value)/100;
+  if(!v)return;
+  const g=ctx.createRadialGradient(W/2,H/2,H*.25,W/2,H/2,H*.75);
+  g.addColorStop(0,'rgba(0,0,0,0)');
+  g.addColorStop(1,`rgba(0,0,0,${v*.85})`);
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+}
+
+function autoBg(){
+  const idx=Math.floor(Math.random()*BG_PALETTES.length);
+  cBg=idx;
+  document.querySelectorAll('.abg').forEach((x,i)=>x.classList.toggle('on',i===idx));
+  rd();
+}
+
+function loadImg(e){
+  const f=e.target.files[0];if(!f)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    img=new Image();
+    img.onload=()=>{document.getElementById('hov').style.display='none';autoBg();rd();};
+    img.src=ev.target.result;
+  };
+  reader.readAsDataURL(f);
+}
+
+function setS(el,v){document.querySelectorAll('.g2 .cb, .g2 .cb').forEach(x=>{if(x.getAttribute('onclick')&&x.getAttribute('onclick').includes('setS'))x.classList.remove('on')});el.classList.add('on');cS=v;rd();}
+function setL(el,v){document.querySelectorAll('.pnl.L .g3 .cb').forEach(x=>{if(x.getAttribute('onclick')&&x.getAttribute('onclick').includes('setL'))x.classList.remove('on')});el.classList.add('on');cL=v;rd();}
+function setA(el,v){document.querySelectorAll('.pnl.L .cb').forEach(x=>{if(x.getAttribute('onclick')&&x.getAttribute('onclick').includes('setA'))x.classList.remove('on')});el.classList.add('on');cA=v;document.getElementById('s2').textContent=el.textContent.trim().replace(/\s+/g,' ');rd();}
+function setM(el,v){document.querySelectorAll('.mt').forEach(x=>x.classList.remove('on'));el.classList.add('on');cM=v;document.getElementById('s3').textContent=el.textContent.replace(/[^\w\s]/g,'').trim();}
+function setT(el,v){document.querySelectorAll('.tp').forEach(x=>x.classList.remove('on'));el.classList.add('on');cT=v;applyTmpl();}
+function setNic(el,v){document.querySelectorAll('#nic-row .tag').forEach(x=>x.classList.remove('on'));el.classList.add('on');nicLv=v;}
+function setLang(el,v){document.querySelectorAll('.pnl.R .tag').forEach(x=>{if(x.getAttribute('onclick')&&x.getAttribute('onclick').includes('setLang'))x.classList.remove('on')});el.classList.add('on');captionLang=v;}
+function setTone(el,v){document.querySelectorAll('.pnl.R .tag').forEach(x=>{if(x.getAttribute('onclick')&&x.getAttribute('onclick').includes('setTone'))x.classList.remove('on')});el.classList.add('on');captionTone=v;}
+function setFmt(el,v){document.querySelectorAll('.pnl.R .tag').forEach(x=>{if(x.getAttribute('onclick')&&x.getAttribute('onclick').includes('setFmt'))x.classList.remove('on')});el.classList.add('on');eFmt=v;}
+function onCatChange(){const v=document.getElementById('pcat').value;document.getElementById('nic-row').style.display=['eliquid','saltnic','disposable'].includes(v)?'':'none';}
+function toggleWM(){
+  const b=document.getElementById('cb1').checked,a=document.getElementById('cb2').checked;
+  document.getElementById('wl').style.display=b?'':'none';
+  document.getElementById('ww').style.display=a?'':'none';
+  document.getElementById('wb').style.display=(b||a)?'':'none';
+}
+function resetAll(){img=null;document.getElementById('hov').style.display='flex';['bri','con','sat'].forEach(id=>document.getElementById(id).value=100);document.getElementById('vig').value=40;document.getElementById('scl').value=75;rd();}
+
+async function genCaption(){
+  const pname=document.getElementById('pname').value.trim()||'Product';
+  const pcat=document.getElementById('pcat');
+  const catLabel=pcat.options[pcat.selectedIndex].text;
+  const extras=[document.getElementById('ex1').value,document.getElementById('ex2').value,document.getElementById('ex3').value].filter(Boolean).join(' | ');
+  const lov=document.getElementById('lov');
+  document.getElementById('lt').textContent='AI Writing Caption...';
+  lov.classList.add('sh');
+  const capEl=document.getElementById('cap-out');
+  capEl.className='caption-out empty';
+  capEl.textContent='Generating...';
+
+  const langInstr=captionLang==='en'?'Write in English only.':captionLang==='id'?'Write in Bahasa Indonesia only.':'Write first in English, then add Bahasa Indonesia translation below separated by a line.';
+  const toneMap={premium:'luxury, sophisticated, aspirational',hype:'energetic, bold, hype streetwear',minimal:'clean, short, understated cool',info:'informative, clear, feature-focused'};
+
+  const prompt=`You are a social media copywriter for VPKNBR.COM, a vape/lifestyle brand targeting international adult consumers.
+
+Create a ready-to-post social media caption for:
+- Product: ${pname}
+- Category: ${catLabel}
+- Nicotine: ${nicLv}
+- Photo style: ${cS}, ${cM} mode
+- Extra info: ${extras||'none'}
+- Tone: ${toneMap[captionTone]||'premium'}
+- Language: ${langInstr}
+
+Rules:
+1. 2-3 punchy sentences for the main caption
+2. Include 1 short CTA (e.g. "Order now at VPKNBR.COM")
+3. Add a blank line then 8-12 relevant hashtags
+4. ALWAYS end with this exact line: "⚠️ FOR ADULTS 21+ ONLY — Contains Nicotine. Keep away from minors."
+5. Output the caption directly, no preamble, no markdown`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    capEl.className='caption-out';
+    capEl.textContent=data.content.map(i=>i.text||'').join('');
+  }catch(e){
+    capEl.className='caption-out';
+    capEl.textContent=`${pname} — Premium quality that speaks for itself. Elevate your experience with VPKNBR.COM.\n\nOrder now at VPKNBR.COM\n\n#vpknbr #vape #${pname.toLowerCase().replace(/\s/g,'')} #vapeshop #eliquid #vapelife #podmod #vapecommunity\n\n⚠️ FOR ADULTS 21+ ONLY — Contains Nicotine. Keep away from minors.`;
+  }
+  lov.classList.remove('sh');
+}
+
+function copyCaption(){
+  const txt=document.getElementById('cap-out').textContent;
+  if(txt.includes('Caption will appear')||txt==='Generating...')return;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn=document.getElementById('copy-btn');
+    const orig=btn.innerHTML;
+    btn.innerHTML='<i class="ti ti-check" aria-hidden="true"></i> Copied!';
+    setTimeout(()=>{btn.innerHTML=orig;},2500);
+  }).catch(()=>{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);});
+}
+
+function dlImg(){
+  const tmp=document.createElement('canvas');
+  tmp.width=mc.width;tmp.height=mc.height;
+  const tc=tmp.getContext('2d');
+  tc.drawImage(mc,0,0);
+  if(document.getElementById('cb1').checked||document.getElementById('cb2').checked){
+    const H=mc.height,W=mc.width,bH=Math.round(H*.07);
+    tc.fillStyle='rgba(0,0,0,.72)';tc.fillRect(0,H-bH,W,bH);
+    if(document.getElementById('cb1').checked){tc.font=`bold ${Math.round(bH*.55)}px 'Bebas Neue',sans-serif`;tc.fillStyle='#C9A84C';tc.fillText('VPKNBR.COM',Math.round(W*.02),H-Math.round(bH*.25));}
+    if(document.getElementById('cb2').checked){tc.font=`bold ${Math.round(bH*.38)}px sans-serif`;tc.fillStyle='#FF6B75';const wt='⚠ FOR ADULTS 21+ ONLY';const tw=tc.measureText(wt).width;tc.strokeStyle='#FF6B75';tc.lineWidth=1;tc.strokeRect(W-tw-Math.round(W*.04),H-bH+Math.round(bH*.15),tw+Math.round(W*.02),Math.round(bH*.7));tc.fillText(wt,W-tw-Math.round(W*.03),H-Math.round(bH*.22));}
+  }
+  const mime=eFmt==='png'?'image/png':eFmt==='webp'?'image/webp':'image/jpeg';
+  const a=document.createElement('a');
+  a.download=`vpknbr_${(document.getElementById('pname').value||'product').replace(/\s+/g,'_').toLowerCase()}_${cT}_${Date.now()}.${eFmt}`;
+  a.href=tmp.toDataURL(mime,.92);a.click();
+}
+
+buildSwatches();
+applyTmpl();
+</script>
+</body>
+</html>
