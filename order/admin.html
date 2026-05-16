@@ -495,11 +495,10 @@ async function saveResiCard(id, kurir, resiId, wa) {
 }
 
 function sendResiWA(wa, name, kurir, resiId) {
-  var waClean = (wa||'').replace(/[^0-9+]/g,'');
-  if (!waClean) { showToast('Nomor WA tidak ditemukan: '+wa); return; }
-  var waFmt = waClean.replace(/^\+/,'');
-  if (waFmt.startsWith('0')) waFmt = '62' + waFmt.slice(1);
-  if (!waFmt.startsWith('62')) waFmt = '62' + waFmt;
+  var waStr = String(wa || '').replace(/[^0-9]/g, '');
+  if (!waStr) { showToast('Nomor WA tidak ditemukan!'); return; }
+  if (waStr.startsWith('0')) waStr = '62' + waStr.slice(1);
+  if (!waStr.startsWith('62')) waStr = '62' + waStr;
   var isGosend = /gosend|gojek/i.test(kurir);
   var val = document.getElementById(resiId).value.trim();
   var msg = '';
@@ -520,7 +519,7 @@ function sendResiWA(wa, name, kurir, resiId) {
     if (track) msg += 'Cek resi: '+track+'\n\n';
     msg += 'Terima kasih sudah belanja di vpknbr!';
   }
-  window.open('https://wa.me/'+waFmt+'?text='+encodeURIComponent(msg), '_blank');
+  window.open('https://wa.me/'+waStr+'?text='+encodeURIComponent(msg), '_blank');
 }
 
 function backToList() {
