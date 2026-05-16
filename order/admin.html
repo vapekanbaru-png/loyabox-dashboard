@@ -162,6 +162,11 @@
   <div class="tab-content active" id="tab-orders">
     <div id="orderDetail" style="display:none"></div>
     <div id="orderListView">
+      <div style="position:relative;margin-bottom:10px">
+        <i class="ti ti-search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--text-t);pointer-events:none"></i>
+        <input type="text" id="searchCustomer" placeholder="Cari nama / WA customer..." oninput="searchOrders(this.value)"
+          style="width:100%;padding:9px 12px 9px 32px;font-size:13px;border:1px solid var(--border);border-radius:var(--rs);background:#fafaf9;color:var(--text);font-family:inherit"/>
+      </div>
       <div class="filter-row">
         <button class="filter-btn active" onclick="filterOrders('Semua',this)">Semua</button>
         <button class="filter-btn" onclick="filterOrders('Baru',this)">Baru</button>
@@ -250,7 +255,7 @@
 <script>
 // ---- CONFIG ----
 var STORE_WA = '628117694443';
-var GS_URL = localStorage.getItem('vpknbr_gs_url') || 'https://script.google.com/macros/s/AKfycbxjnrmObL_nvuzXpxAe99L2_EavwlmicqofqpoArPWuqDNONAAmFArcXJD8YiPv8RVR/exec';
+var GS_URL = localStorage.getItem('vpknbr_gs_url') || 'https://script.google.com/macros/s/AKfycbyDjpNeNfBgVIj0Ng-6IVE6MxWlv0WDvBcuaxUr4bATazEB8IuAg80ilK5qLRlh-d2C/exec';
 var PAYMENT = {BCA:{label:'BCA',no:'8455279913',an:'Ikhbal Fadillah'},BNI:{label:'BNI',no:'0305384923',an:'Ikhbal Fadillah'},MANDIRI:{label:'Mandiri',no:'1080014949011',an:'Yendra Afriza'},DANA:{label:'Dana',no:'081290020294',an:'Ikhbal Fadillah'}};
 
 // ---- INIT ----
@@ -296,17 +301,10 @@ async function gsGet(params) {
 
 async function gsPost(data) {
   if (!GS_URL) { showToast('Setup Google Sheets URL dulu!'); return null; }
-  // Use no-cors POST via form encode to bypass CORS preflight
-  var params = new URLSearchParams();
-  params.append('payload', JSON.stringify(data));
-  var res = await fetch(GS_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: params.toString()
-  });
-  // no-cors returns opaque response, assume success
-  return {success: true, id: 'ORD-'+Date.now()};
+  // Encode all data as GET params to avoid CORS preflight
+  var url = GS_URL + '?action=' + encodeURIComponent(data.action) + '&payload=' + encodeURIComponent(JSON.stringify(data));
+  var res = await fetch(url);
+  return res.json();
 }
 
 // ---- ORDER LIST ----
@@ -340,13 +338,29 @@ function renderOrderList(status) {
     var div = document.createElement('div');
     div.className = 'order-card status-' + o.status.toLowerCase();
     var prods = (o.products||[]).filter(function(p){return p.name;});
+    var resiId = 'resi_'+o.id.replace(/[^a-z0-9]/gi,'_');
     div.innerHTML =
-      '<div class="oc-top"><span class="oc-id">'+o.id+'</span><span class="oc-status s-'+o.status.toLowerCase()+'">'+o.status+'</span></div>'+
-      '<div class="oc-name">'+o.name+'</div>'+
+      '<div class="oc-top" style="cursor:pointer" onclick="showOrderDetail('+JSON.stringify(o).replace(/"/g,'&quot;')+')">'+
+        '<span class="oc-id">'+o.id+'</span>'+
+        '<span class="oc-status s-'+o.status.toLowerCase()+'">'+o.status+'</span>'+
+      '</div>'+
+      '<div class="oc-name" style="cursor:pointer" onclick="showOrderDetail('+JSON.stringify(o).replace(/"/g,'&quot;')+')">'+o.name+'</div>'+
       '<div class="oc-meta">'+o.kurir+' &bull; '+prods.length+' produk &bull; '+o.tanggal+'</div>'+
       (o.total>0?'<div class="oc-total">'+fmt(o.total)+'</div>':'')+
-      (o.resi?'<div class="oc-meta" style="margin-top:4px;color:var(--success-text)">Resi: '+o.resi+'</div>':'');
-    div.onclick = function(){ showOrderDetail(o); };
+      // Resi section inline
+      '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">'+
+        '<div style="font-size:11px;font-weight:700;color:var(--success-text);margin-bottom:6px"><i class="ti ti-truck"></i> '+(/gosend|gojek/i.test(o.kurir)?'Info Pengiriman GoSend':'Nomor Resi '+o.kurir)+'</div>'+
+        '<div style="display:flex;gap:6px;align-items:center">'+
+          '<input type="text" id="'+resiId+'" value="'+(o.resi||'')+'" placeholder="Isi nomor resi..." '+
+            'style="flex:1;padding:7px 10px;font-size:13px;border:1px solid var(--border);border-radius:var(--rs);background:#fafaf9;font-family:inherit" placeholder="'+(/gosend|gojek/i.test(o.kurir)?'Catatan (opsional)':'Isi nomor resi...')+'"/>'+
+          '<button onclick="saveResiCard(''+o.id+'',''+o.kurir+'',''+resiId+'',''+o.wa+'')" '+
+            'style="padding:7px 10px;background:var(--success-text);color:#fff;border:none;border-radius:var(--rs);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit">'+
+            '<i class="ti ti-check"></i> Simpan</button>'+
+          '<button onclick="sendResiWA(''+o.wa+'',''+o.name+'',''+o.kurir+'',''+resiId+'')" '+
+            'style="padding:7px 10px;background:#25D366;color:#fff;border:none;border-radius:var(--rs);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit">'+
+            '<i class="ti ti-brand-whatsapp"></i> Kirim</button>'+
+        '</div>'+
+      '</div>';
     list.appendChild(div);
   });
 }
@@ -416,6 +430,62 @@ function showOrderDetail(o) {
         '</button>'+
       '</div>'+
     '</div>';
+}
+
+function searchOrders(q) {
+  q = q.toLowerCase().trim();
+  var filtered = q ? allOrders.filter(function(o){
+    return (o.name||'').toLowerCase().includes(q) || (o.wa||'').includes(q) || (o.id||'').toLowerCase().includes(q);
+  }) : allOrders;
+  // apply current status filter too
+  var byStatus = currentFilter === 'Semua' ? filtered : filtered.filter(function(o){return o.status===currentFilter;});
+  renderFilteredOrders(byStatus);
+}
+
+function renderFilteredOrders(list) {
+  var el = document.getElementById('orderList');
+  if (!list.length) { el.innerHTML = '<div class="empty-list">Tidak ada orderan ditemukan</div>'; return; }
+  el.innerHTML = '';
+  list.forEach(function(o){ renderOrderCard(o, el); });
+}
+
+async function saveResiCard(id, kurir, resiId, wa) {
+  var resi = document.getElementById(resiId).value.trim();
+  if (!resi) { showToast('Isi nomor resi dulu!'); return; }
+  showToast('Menyimpan resi...');
+  var res = await gsPost({action:'update_resi', id:id, resi:resi, kurir:kurir});
+  if (res && res.success) {
+    showToast('Resi disimpan! Status → Dikirim');
+    // Update local data
+    allOrders.forEach(function(o){ if(o.id===id){ o.resi=resi; o.status='Dikirim'; } });
+  } else { showToast('Gagal simpan — cek koneksi'); }
+}
+
+function sendResiWA(wa, name, kurir, resiId) {
+  var waClean = (wa||'').replace(/\D/g,'');
+  var waFmt = waClean.startsWith('0') ? '62'+waClean.slice(1) : waClean;
+  if (!waFmt) { showToast('Nomor WA tidak ditemukan!'); return; }
+  var isGosend = /gosend|gojek/i.test(kurir);
+  var val = document.getElementById(resiId).value.trim();
+  var msg = '';
+  if (isGosend) {
+    msg = 'Halo '+name+', pesanan kamu sudah dijemput driver GoSend!\n\n';
+    msg += 'Kurir : *GoSend*\n';
+    if (val) msg += 'Info  : '+val+'\n';
+    msg += '\nDriver sedang dalam perjalanan ke alamat kamu.\nPantau lewat aplikasi Gojek ya.\n\nTerima kasih sudah belanja di vpknbr!';
+  } else {
+    if (!val) { showToast('Isi nomor resi dulu!'); return; }
+    msg = 'Halo '+name+', pesanan kamu sudah dikirim!\n\n';
+    msg += 'Kurir    : *'+kurir+'*\n';
+    msg += 'No. Resi : *'+val+'*\n\n';
+    var track = '';
+    if (/j.?t|jnt/i.test(kurir)) track = 'https://jet.co.id/track';
+    else if (/jne/i.test(kurir)) track = 'https://www.jne.co.id/id/tracking/trace';
+    else if (/sicepat/i.test(kurir)) track = 'https://www.sicepat.com/checkAwb';
+    if (track) msg += 'Cek resi: '+track+'\n\n';
+    msg += 'Terima kasih sudah belanja di vpknbr!';
+  }
+  window.open('https://wa.me/'+waFmt+'?text='+encodeURIComponent(msg), '_blank');
 }
 
 function backToList() {
