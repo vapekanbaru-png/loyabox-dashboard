@@ -336,37 +336,66 @@ function renderOrderList(status) {
   list.innerHTML = '';
   filtered.forEach(function(o) {
     var div = document.createElement('div');
-    div.className = 'order-card status-' + o.status.toLowerCase();
+    div.className = 'order-card status-' + (o.status||'baru').toLowerCase();
     var prods = (o.products||[]).filter(function(p){return p.name;});
-    var resiId = 'resi_'+o.id.replace(/[^a-z0-9]/gi,'_');
-    div.innerHTML =
-      '<div class="oc-top" style="cursor:pointer" onclick="showOrderDetail('+JSON.stringify(o).replace(/"/g,'&quot;')+')">'+
-        '<span class="oc-id">'+o.id+'</span>'+
-        '<span class="oc-status s-'+o.status.toLowerCase()+'">'+o.status+'</span>'+
-      '</div>'+
-      '<div class="oc-name" style="cursor:pointer" onclick="showOrderDetail('+JSON.stringify(o).replace(/"/g,'&quot;')+')">'+o.name+'</div>'+
-      '<div class="oc-meta">'+o.kurir+' &bull; '+prods.length+' produk &bull; '+o.tanggal+'</div>'+
+    var resiId = 'resi_' + (o.id||'').replace(/[^a-z0-9]/gi,'_');
+    var isGosend = /gosend|gojek/i.test(o.kurir||'');
+
+    // Header clickable
+    var head = document.createElement('div');
+    head.style.cssText = 'cursor:pointer';
+    head.innerHTML =
+      '<div class="oc-top"><span class="oc-id">'+(o.id||'')+'</span>'+
+      '<span class="oc-status s-'+(o.status||'baru').toLowerCase()+'">'+(o.status||'Baru')+'</span></div>'+
+      '<div class="oc-name">'+(o.name||'—')+'</div>'+
+      '<div class="oc-meta">'+(o.kurir||'—')+' &bull; '+prods.length+' produk &bull; '+(o.tanggal||'')+'</div>'+
       (o.total>0?'<div class="oc-total">'+fmt(o.total)+'</div>':'')+
-      // Resi section inline
-      '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">'+
-        '<div style="font-size:11px;font-weight:700;color:var(--success-text);margin-bottom:6px"><i class="ti ti-truck"></i> '+(/gosend|gojek/i.test(o.kurir)?'Info Pengiriman GoSend':'Nomor Resi '+o.kurir)+'</div>'+
-        '<div style="display:flex;gap:6px;align-items:center">'+
-          '<input type="text" id="'+resiId+'" value="'+(o.resi||'')+'" placeholder="Isi nomor resi..." '+
-            'style="flex:1;padding:7px 10px;font-size:13px;border:1px solid var(--border);border-radius:var(--rs);background:#fafaf9;font-family:inherit" placeholder="'+(/gosend|gojek/i.test(o.kurir)?'Catatan (opsional)':'Isi nomor resi...')+'"/>'+
-          '<button onclick="saveResiCard(''+o.id+'',''+o.kurir+'',''+resiId+'',''+o.wa+'')" '+
-            'style="padding:7px 10px;background:var(--success-text);color:#fff;border:none;border-radius:var(--rs);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit">'+
-            '<i class="ti ti-check"></i> Simpan</button>'+
-          '<button onclick="sendResiWA(''+o.wa+'',''+o.name+'',''+o.kurir+'',''+resiId+'')" '+
-            'style="padding:7px 10px;background:#25D366;color:#fff;border:none;border-radius:var(--rs);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit">'+
-            '<i class="ti ti-brand-whatsapp"></i> Kirim</button>'+
-        '</div>'+
-      '</div>';
+      (o.resi?'<div class="oc-meta" style="color:var(--success-text);margin-top:4px">Resi: '+o.resi+'</div>':'');
+    head.onclick = (function(ord){ return function(){ showOrderDetail(ord); }; })(o);
+    div.appendChild(head);
+
+    // Resi section
+    var resiDiv = document.createElement('div');
+    resiDiv.style.cssText = 'margin-top:10px;padding-top:10px;border-top:1px solid var(--border)';
+    
+    var label = document.createElement('div');
+    label.style.cssText = 'font-size:11px;font-weight:700;color:var(--success-text);margin-bottom:6px';
+    label.innerHTML = '<i class="ti ti-truck"></i> ' + (isGosend ? 'Info Pengiriman GoSend' : 'Nomor Resi ' + (o.kurir||''));
+    resiDiv.appendChild(label);
+
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:6px;align-items:center';
+
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.id = resiId;
+    inp.value = o.resi || '';
+    inp.placeholder = isGosend ? 'Catatan (opsional)' : 'Isi nomor resi...';
+    inp.style.cssText = 'flex:1;padding:7px 10px;font-size:13px;border:1px solid var(--border);border-radius:var(--rs);background:#fafaf9;font-family:inherit';
+
+    var btnSave = document.createElement('button');
+    btnSave.innerHTML = '<i class="ti ti-check"></i> Simpan';
+    btnSave.style.cssText = 'padding:7px 10px;background:var(--success-text);color:#fff;border:none;border-radius:var(--rs);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit';
+    btnSave.onclick = (function(id,kurir,rid){ return function(){ saveResiCard(id,kurir,rid); }; })(o.id, o.kurir, resiId);
+
+    var btnWA = document.createElement('button');
+    btnWA.innerHTML = '<i class="ti ti-brand-whatsapp"></i> Kirim';
+    btnWA.style.cssText = 'padding:7px 10px;background:#25D366;color:#fff;border:none;border-radius:var(--rs);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit';
+    btnWA.onclick = (function(wa,name,kurir,rid){ return function(){ sendResiWA(wa,name,kurir,rid); }; })(o.wa, o.name, o.kurir, resiId);
+
+    row.appendChild(inp);
+    row.appendChild(btnSave);
+    row.appendChild(btnWA);
+    resiDiv.appendChild(row);
+    div.appendChild(resiDiv);
     list.appendChild(div);
   });
 }
 
 // ---- ORDER DETAIL ----
+var currentDetailOrder = null;
 function showOrderDetail(o) {
+  currentDetailOrder = o;
   document.getElementById('orderListView').style.display = 'none';
   var det = document.getElementById('orderDetail');
   det.style.display = 'block';
