@@ -381,7 +381,11 @@ function renderOrderList(status) {
     var btnWA = document.createElement('button');
     btnWA.innerHTML = '<i class="ti ti-brand-whatsapp"></i> Kirim';
     btnWA.style.cssText = 'padding:7px 10px;background:#25D366;color:#fff;border:none;border-radius:var(--rs);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit';
-    btnWA.onclick = (function(wa,name,kurir,rid){ return function(){ sendResiWA(wa,name,kurir,rid); }; })(o.wa, o.name, o.kurir, resiId);
+    btnWA.onclick = (function(ord, rid){ 
+      return function(){ 
+        sendResiWA(ord.wa, ord.name, ord.kurir, rid); 
+      }; 
+    })(o, resiId);
 
     row.appendChild(inp);
     row.appendChild(btnSave);
@@ -491,9 +495,11 @@ async function saveResiCard(id, kurir, resiId, wa) {
 }
 
 function sendResiWA(wa, name, kurir, resiId) {
-  var waClean = (wa||'').replace(/\D/g,'');
-  var waFmt = waClean.startsWith('0') ? '62'+waClean.slice(1) : waClean;
-  if (!waFmt) { showToast('Nomor WA tidak ditemukan!'); return; }
+  var waClean = (wa||'').replace(/[^0-9+]/g,'');
+  if (!waClean) { showToast('Nomor WA tidak ditemukan: '+wa); return; }
+  var waFmt = waClean.replace(/^\+/,'');
+  if (waFmt.startsWith('0')) waFmt = '62' + waFmt.slice(1);
+  if (!waFmt.startsWith('62')) waFmt = '62' + waFmt;
   var isGosend = /gosend|gojek/i.test(kurir);
   var val = document.getElementById(resiId).value.trim();
   var msg = '';
